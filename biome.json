@@ -1,0 +1,6 @@
+{
+  "extends": ["package/biome-config/biome.json"],
+  "formatter": {
+    "ignore": ["node_modules"]
+  }
+}

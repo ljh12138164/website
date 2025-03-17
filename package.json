@@ -5,15 +5,31 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint:all": "turbo lint",
+    "lint": "biome check --fix --unsafe && biome lint .&& pnpm run lint:all"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,jsx,tsx,json,jsonc,vue,scss,css,html}": [
+      "biome check --fix --unsafe",
+      "biome check --write --no-errors-on-unmatched",
+      "biome check --write --organize-imports-enabled=false --no-errors-on-unmatched",
+      "biome check --write --unsafe --no-errors-on-unmatched",
+      "biome lint --write --no-errors-on-unmatched"
+    ],
+    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
   },
   "devDependencies": {
-    "@workspace/eslint-config": "workspace:*",
+    "simple-git-hooks": "^2.11.1",
+    "@workspace/biome-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "prettier": "^3.5.1",
-    "turbo": "^2.4.2",
-    "typescript": "5.7.3"
+    "lint-staged": "^15.5.0",
+    "stylelint": "^16.16.0",
+    "biome": "^0.3.3",
+    "turbo": "^2.4.4",
+    "typescript": "5.8.2"
   },
   "packageManager": "pnpm@10.4.1",
   "engines": {
