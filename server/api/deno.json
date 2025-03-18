@@ -1,0 +1,20 @@
+{
+  "imports": {
+    "@types/node": "npm:@types/node@^22.13.10",
+    "await-to-js": "npm:await-to-js@^3.0.0",
+    "deno": "npm:deno@^2.2.4",
+    "hono": "npm:hono@^4.7.4",
+    "drizzle-orm": "npm:drizzle-orm@^0.40.1",
+    "drizzle-kit": "npm:drizzle-kit@^0.20.14",
+    "postgres": "npm:postgres@^3.4.5",
+    "tsup": "npm:tsup@^8.4.0"
+  },
+  "tasks": {
+    "start": "deno run --allow-net --allow-sys --unstable-sloppy-imports  src/hono/index.ts"
+  },
+  "nodeModulesDir":"auto",
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  }
+}
