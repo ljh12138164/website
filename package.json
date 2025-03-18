@@ -25,7 +25,7 @@
   "devDependencies": {
     "simple-git-hooks": "^2.11.1",
     "@workspace/biome-config": "workspace:*",
-    "@workspace/typescript-config": "workspace:*",
+    "@workspace/config": "workspace:*",
     "lint-staged": "^15.5.0",
     "stylelint": "^16.16.0",
     "biome": "^0.3.3",
