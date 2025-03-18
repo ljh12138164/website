@@ -1,10 +1,9 @@
-// In Next.js, this file would be called: app/providers.tsx
 'use client';
 
 import { QueryClient, QueryClientProvider, isServer } from '@tanstack/react-query';
 
 // 创建查询客户端
-function makeQueryClient() {
+function makeQueryClient():QueryClient {
   return new QueryClient({
     defaultOptions: {
       queries: {
@@ -22,6 +21,10 @@ function makeQueryClient() {
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
+/**
+ * ### 获取查询客户端
+ * @returns QueryClient
+ */
 function getQueryClient() {
   // 服务端：总是创建一个新的查询客户端
   if (isServer) return makeQueryClient();
