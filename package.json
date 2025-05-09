@@ -20,11 +20,12 @@
       "biome check --write --unsafe --no-errors-on-unmatched",
       "biome lint --write --no-errors-on-unmatched"
     ],
-    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
+    "*": [
+      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
   },
   "devDependencies": {
     "simple-git-hooks": "^2.11.1",
-    "@workspace/biome-config": "workspace:*",
     "@workspace/config": "workspace:*",
     "lint-staged": "^15.5.0",
     "stylelint": "^16.16.0",

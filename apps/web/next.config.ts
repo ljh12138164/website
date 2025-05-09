@@ -1,7 +1,10 @@
-import { NextConfig } from "next"
+import createNextIntlPlugin from 'next-intl/plugin';
+import { NextConfig } from 'next';
 
-const nextConfig:NextConfig = {
-  transpilePackages: ["@workspace/ui"],
-}
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
-export default nextConfig
+const nextConfig: NextConfig = {
+  transpilePackages: ['@workspace/ui'],
+};
+
+export default withNextIntl(nextConfig);

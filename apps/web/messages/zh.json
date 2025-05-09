@@ -1,0 +1,25 @@
+{
+  "common": {
+    "welcome": "欢迎",
+    "home": "首页",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "login": "登录",
+    "register": "注册",
+    "logout": "退出登录",
+    "settings": "设置",
+    "language": "语言"
+  },
+  "home": {
+    "title": "欢迎访问我们的网站",
+    "description": "这是一个使用Next.js和i18n支持的示例网站。"
+  },
+  "about": {
+    "title": "关于我们",
+    "description": "我们是一支充满激情的开发团队。"
+  },
+  "error": {
+    "notFound": "页面未找到",
+    "goHome": "返回首页"
+  }
+}

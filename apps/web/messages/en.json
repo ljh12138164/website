@@ -1,0 +1,25 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "settings": "Settings",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Welcome to our website",
+    "description": "This is a sample website with Next.js and i18n support."
+  },
+  "about": {
+    "title": "About Us",
+    "description": "We are a team of passionate developers."
+  },
+  "error": {
+    "notFound": "Page not found",
+    "goHome": "Go to home page"
+  }
+}

@@ -16,7 +16,7 @@ export default defineConfig({
   clean: true,
 
   // 生成 sourcemap
-  sourcemap:MODE==='development' && true,
+  sourcemap: MODE === 'development' && true,
 
   // 生成声明文件
   dts: true,
