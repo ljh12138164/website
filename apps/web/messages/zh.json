@@ -21,5 +21,7 @@
   "error": {
     "notFound": "页面未找到",
     "goHome": "返回首页"
-  }
+  },
+  "description": "这是一个使用Next.js和i18n支持的示例网站。",
+  "title": "欢迎访问我们的网站"
 }

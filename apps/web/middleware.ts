@@ -1,22 +1,19 @@
 import createMiddleware from 'next-intl/middleware';
-import { locales } from './i18n';
+import { locales, defaultLocale } from './i18n';
 
 export default createMiddleware({
-  // 支持的语言列表
+  // 用于国际化路由的配置
   locales,
-  // 默认语言
-  defaultLocale: 'zh',
-  // 语言检测设置
+  defaultLocale,
+  // 这将自动检测用户首选语言
   localeDetection: true,
-  // 匹配所有路径
+  // 默认语言不添加前缀
   localePrefix: 'as-needed',
 });
 
 export const config = {
-  // 匹配所有路径，除了这些：
-  // - api路由 (/api/*)
-  // - 静态文件 (如 /favicon.ico)
-  // - 以'_next'开头的路径 (/_next/*)
-  // - 以'.'开头的文件（如 .well-known, robots.txt）
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  // Match all pathnames except for
+  // - … if they start with `/api`, `/trpc`, `/_next`, `/_vercel`, `/public`
+  // - … the ones containing a dot (e.g. `favicon.ico`)
+  matcher: '/((?!api|trpc|_next|_vercel|public|favicon.ico|.*\\..*).*)',
 };
