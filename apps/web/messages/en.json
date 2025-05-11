@@ -23,5 +23,8 @@
     "goHome": "Go to home page"
   },
   "description": "This is a sample website with Next.js and i18n support.",
-  "title": "Welcome to our website"
+  "title": "Welcome to our website",
+  "auth": {
+    "signInTitle": "Sign in"
+  }
 }
