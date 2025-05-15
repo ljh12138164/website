@@ -1,4 +1,4 @@
-import { Providers } from '@/components/provider/providers';
+import { Providers } from '@/src/components/provider/providers';
 import '@workspace/ui/globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';

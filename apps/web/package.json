@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --port 8080",
     "build": "next build",
     "start": "next start",
     "lint": "biome lint --write --no-errors-on-unmatched",
@@ -30,6 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@workspace/config": "workspace:*",
+    "babel-plugin-react-compiler": "19.1.0-rc.2",
     "typescript": "^5.8.2"
   }
 }

@@ -1,8 +1,8 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { usePathname, useRouter } from '../navigation';
-import { locales } from '../i18n';
+import { usePathname, useRouter } from '../i18n/navigation';
+import { locales } from '../i18n/request';
 
 export default function LanguageSwitcher() {
   const t = useTranslations('common');
