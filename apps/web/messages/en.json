@@ -26,5 +26,6 @@
   "title": "Welcome to our website",
   "auth": {
     "signInTitle": "Sign in"
-  }
+  },
+  "show": {}
 }

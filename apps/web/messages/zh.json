@@ -26,5 +26,6 @@
   "title": "欢迎访问我们的网站",
   "auth": {
     "signInTitle": "登录"
-  }
+  },
+  "show": {}
 }
