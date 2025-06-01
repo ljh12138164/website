@@ -4,7 +4,9 @@ import {
   qiankunWindow,
   renderWithQiankun,
 } from 'vite-plugin-qiankun/dist/helper';
-import App from './App';
+import '@workspace/ui/globals.css';
+import { RouterProvider } from 'react-router-dom';
+import router from './router';
 const initQianKun = () => {
   renderWithQiankun({
     // bootstrap 只会在微应用初始化的时候调用一次，下次微应用重新进入时会直接调用 mount 钩子，不会再重复触发 bootstrap
@@ -31,7 +33,7 @@ const initQianKun = () => {
 const render = (container: HTMLElement | null) => {
   // 如果是在主应用的环境下就挂载主应用的节点，否则挂载到本地
   const appDom = container ? container : document.getElementById('root')!;
-  createRoot(appDom).render(<App />);
+  createRoot(appDom).render(<RouterProvider router={router} />);
 };
 // 判断是否为乾坤环境，否则会报错iqiankun]: Target container with #subAppContainerVue3 not existed while subAppVue3 mounting!
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions

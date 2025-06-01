@@ -50,14 +50,14 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <div className='flex flex-col min-h-screen'>
-              <nav className='bg-red-500 flex-[0_0_50px]'>
+              <nav className=' flex-[0_0_50px]'>
                 <div>
                   <h1>{t('home.title')}</h1>
                 </div>
               </nav>
               {/* 微前端容器 */}
               {children}
-              <footer className='bg-blue-500 flex-[0_0_50px]'>
+              <footer className=' flex-[0_0_50px]'>
                 <h1>{t('home.title')}</h1>
               </footer>
             </div>

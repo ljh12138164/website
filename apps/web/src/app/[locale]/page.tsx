@@ -11,5 +11,5 @@ export default async function Home({ params }: PageProps) {
   // 获取翻译函数
   const t = await getTranslations({ locale });
 
-  return <main id='main' className='flex-1 ' />;
+  return <main id='main' className='flex-1' />;
 }
