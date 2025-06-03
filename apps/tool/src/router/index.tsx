@@ -1,11 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
-import App from '../page/App';
+import Eletron from '../page/Eletron';
+import TodoList from '../page/TodoList';
 
 const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: <App />,
+      element: <TodoList />,
+    },
+    {
+      path: '/eletron',
+      element: <Eletron />,
     },
   ],
   {
