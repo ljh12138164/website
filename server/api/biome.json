@@ -1,0 +1,6 @@
+{
+  "extends": ["@workspace/config/biome"],
+  "formatter": {
+    "ignore": ["node_modules"]
+  }
+}

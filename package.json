@@ -5,6 +5,11 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "server:c": "cd server/api && bun run controller",
+    "server:dev": " npm-run-all --parallel server:start server:studio",
+    "server:start": "cd server/api && bun run start",
+    "server:push": "cd server/api && bun run push",
+    "server:studio": "cd server/api && bun run db:studio",
     "dev:tool": "turbo dev --filter=tool --filter=webs",
     "dev:web": "turbo dev --filter=web",
     "lint:all": "turbo lint",
@@ -26,16 +31,24 @@
     ]
   },
   "devDependencies": {
-    "simple-git-hooks": "^2.11.1",
     "@workspace/config": "workspace:*",
-    "lint-staged": "^15.5.0",
-    "stylelint": "^16.16.0",
     "biome": "^0.3.3",
+    "lint-staged": "^15.5.0",
+    "simple-git-hooks": "^2.11.1",
+    "stylelint": "^16.16.0",
     "turbo": "^2.4.4",
     "typescript": "5.8.2"
   },
   "packageManager": "pnpm@10.4.1",
   "engines": {
     "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core"
+    ]
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }
