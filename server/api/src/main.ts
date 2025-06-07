@@ -1,20 +1,35 @@
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ZodValidationPipe } from 'nestjs-zod';
 import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // 使用ZodValidationPipe来验证请求体
+  app.useGlobalPipes(new ZodValidationPipe());
 
+  // 配置Swagger
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('API')
+    .setDescription('API Description')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('API')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  console.log('swagger is running on http://localhost:3000/api');
 
-  await app.listen(process.env.PORT ?? 3000);
+  // 启动服务
+  const port = process.env.PORT ?? 3000;
+  const url = `http://localhost:${port}/api`;
+
+  console.log(`🎉🎉🎉 API Document is running on ${url}`);
+
+  await app.listen(port);
+  // 热更新
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 }
 bootstrap();

@@ -1,2 +1,2 @@
-export * from './net/index.ts';
-export * from './types/index.ts';
+export * from './net';
+export * from './types';

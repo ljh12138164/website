@@ -5,6 +5,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "docker:build": "docker build -t website-api -f server/api/dockerfile .",
+    "server:deploy": "cd server/api && bun run docker:build && bun run docker:run",
     "server:c": "cd server/api && bun run controller",
     "server:dev": " npm-run-all --parallel server:start server:studio",
     "server:start": "cd server/api && bun run start",

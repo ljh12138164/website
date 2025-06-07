@@ -1,15 +1,14 @@
-import { Body, Inject, Injectable, Res } from '@nestjs/common';
+import { Body, Inject, Injectable } from '@nestjs/common';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import * as schema from '../db/schema';
 import { PG_CONNECTION } from '../drizzle/constants';
-import { UserCreateDto } from './user.shema';
+import { UserCreateDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject(PG_CONNECTION) private db: NodePgDatabase<typeof schema>
   ) {}
-
   async getUsers() {
     return this.db.query.users.findMany();
   }
