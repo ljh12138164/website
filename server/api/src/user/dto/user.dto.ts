@@ -10,3 +10,11 @@ const UserSchema = z.object({
 
 // 创建用户DTO
 export class UserCreateDto extends createZodDto(UserSchema) {}
+
+// 登录DTO
+const LoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
+export class LoginDto extends createZodDto(LoginSchema) {}
