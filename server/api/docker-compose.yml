@@ -14,6 +14,8 @@ services:
       - postgres
     networks:
       - app-network
+    command: >
+      sh -c "bun run push && bun run start:prod"
 
   postgres:
     image: postgres:latest

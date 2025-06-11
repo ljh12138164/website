@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { Suspense, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { QIANKUN_CONFIG, QIANKUN_CONFIG_NAME } from '../../qiankun';
-import QueryProvider from './query-provide';
+import { QueryProvider } from './query-provide';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
