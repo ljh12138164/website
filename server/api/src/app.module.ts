@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { DrizzleModule } from './drizzle/drizzle.module';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
+import { UserRouter } from './auth/user.router';
 
 @Module({
   imports: [
@@ -13,10 +10,9 @@ import { AuthModule } from './auth/auth.module';
       envFilePath: '.env',
     }),
     DrizzleModule,
-    UserModule,
-    AuthModule,
+    UserRouter,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
