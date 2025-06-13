@@ -6,6 +6,7 @@ import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { createUIMiddleware } from './middleware/ui';
 import { webRouter } from './router/web';
+import 'dotenv/config';
 
 const app = new Hono().use(cors({
   origin: '*',
@@ -19,10 +20,11 @@ const app = new Hono().use(cors({
 
 
 app.route('/ui', createUIMiddleware(app))
-
 // 导出端口和fetch函数
-export default serve({ fetch: app.fetch, port: 3000 })
+export default serve({ fetch: app.fetch, port: Number(process.env.PORT) })
 
+console.log(`🚀🚀🚀服务器启动成功，端口：http://localhost:${process.env.PORT}`)
+console.log(`🚀🚀🚀数据库连接成功,数据库地址：https://local.drizzle.studio`)
 
 // 导出trpc类型
 export type AppType = typeof app;

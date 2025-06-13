@@ -3,11 +3,7 @@
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "moduleResolution": "bundler",
-    "target": "ESNext",
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noImplicitAny": true
+    "moduleResolution":"bundler",
+    "target":"ESNext"
   }
 }

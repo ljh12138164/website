@@ -5,9 +5,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "server:dev": " npm-run-all --parallel server:start server:studio",
-    "server:start": "cd server/apis && bun run dev",
-    "server:studio": "cd server/apis && bun run db:studio",
+    "server:dev": "turbo dev --filter=apis",
     "dev:tool": "turbo dev --filter=tool --filter=webs",
     "dev:web": "turbo dev --filter=web",
     "lint:all": "turbo lint",
