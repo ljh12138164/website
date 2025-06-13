@@ -1,0 +1,29 @@
+{
+  "name": "apis",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "build": "tsup /src/index.ts --format esm --dts --outDir dist",
+    "docker:build:tsup": "tsup /app/src/index.ts --format esm --dts --outDir dist",
+    "docker:build": "docker-compose  -f docker-compose.yml build",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@hono/swagger-ui": "^0.5.2",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.44.2",
+    "hono": "latest",
+    "pg": "^8.16.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.16",
+    "@types/pg": "^8.15.4",
+    "drizzle-kit": "^0.31.1",
+    "tsup": "^8.4.0",
+    "tsx": "^4.20.2",
+    "typescript": "^5.8.3"
+  }
+}

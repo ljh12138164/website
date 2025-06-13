@@ -1,5 +1,6 @@
-import { genConfig, genRequse } from '@workspace/lib';
-const config = genConfig(process.env.PUBLIC_NEXT_BASE_URL!);
-const http = genRequse(config);
+import { AppType } from 'apis';
+import { hc } from 'hono/client';
 
-export default http;
+const client = hc<AppType>(process.env.PUBLIC_NEXT_BASE_URL!);
+
+export default client;

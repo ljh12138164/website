@@ -1,17 +1,16 @@
 'use client';
 
-import http from "@/service";
+import client from "@/service";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-export const getHello = async () => {
-    const res = await http.get('/');
-    console.log(res);
-    return res.data;
-};
+
 export default function HomeComponent() {
     const { data } = useSuspenseQuery({
         queryKey: ['hello'],
-        queryFn: getHello,
+        queryFn: async () => {
+            const res = await client.api.web.user.abc.$get();
+            return res.text();
+        },
     });
     return <div>{data}</div>;
 }

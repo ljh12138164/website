@@ -10,12 +10,14 @@ services:
       - '8666:8666'
     environment:
       - DATABASE_URL=postgres://user:password@postgres:5432/postgres
+      - JWT_ACCESS_SECRET=your-access-secret-key-change-in-production
+      - JWT_REFRESH_SECRET=your-refresh-secret-key-change-in-production
     depends_on:
       - postgres
     networks:
       - app-network
     command: >
-      sh -c "bun run push && bun run start:prod"
+      sh -c "bun run push && bun run dev"
 
   postgres:
     image: postgres:latest
