@@ -1,4 +1,4 @@
-FROM oven/bun AS base
+FROM denoland/deno AS base
 
 FROM base AS builder
 WORKDIR /app
@@ -7,9 +7,8 @@ COPY package*.json ./
 COPY tsconfig.json ./
 COPY src ./src
 
-RUN bun install && \
-    bun add -D bun-types && \
-    bun run docker:build:tsup
+RUN deno install && \
+    deno run docker:build:tsup
 
 FROM base AS runner
 WORKDIR /app
@@ -25,4 +24,4 @@ COPY --from=builder --chown=hono:nodejs /app/package.json /app/package.json
 USER hono
 EXPOSE 3000
 
-CMD ["bun", "run", "/app/dist/index.js"]
+CMD ["deno", "run", "--allow-all", "--unstable-sloppy-imports", "/app/dist/index.js"]

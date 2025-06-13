@@ -17,7 +17,7 @@ services:
     networks:
       - app-network
     command: >
-      sh -c "bun run push && bun run dev"
+      deno run --allow-all /app/dist/index.js
 
   postgres:
     image: postgres:latest
