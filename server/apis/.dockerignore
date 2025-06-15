@@ -8,9 +8,5 @@
 **/.idea
 **/coverage
 **/.env
-**/.env.*
 **/build
 **/logs
-**/*.log
-**/.DS_Store
-**/Thumbs.db
