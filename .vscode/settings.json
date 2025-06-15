@@ -1,6 +1,8 @@
 {
-    "cSpell.words": [
-        "hono",
-        "tsup"
-    ]
+  "cSpell.words": ["hono", "tsup"],
+  "rust-analyzer.linkedProjects": [
+    "./desktop/tool/src-tauri/Cargo.toml",
+    "./rust/hello/Cargo.toml"
+  ],
+  "rust-analyzer.checkOnSave.enable": true
 }
