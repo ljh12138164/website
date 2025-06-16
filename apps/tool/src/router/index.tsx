@@ -14,7 +14,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/tool',
+    basename: '/',
   }
 );
 

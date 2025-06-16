@@ -1,4 +1,4 @@
-import { Input } from '@workspace/ui/components/input';
+import { Input } from '@ui/input';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';

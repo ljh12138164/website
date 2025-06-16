@@ -3,6 +3,7 @@ import TodoList from '../container/todo/TodoList';
 import TodoForm from '../container/todo/TodoForm';
 import type { Todo } from '../types/todo';
 import { todoService } from '../services/todoService';
+import Image from '../components/Image';
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -54,6 +55,7 @@ function App() {
     <div className='p-4 max-w-md mx-auto h-[calc(100vh-100px)]'>
       <section className='bg-white p-4 rounded-lg shadow-md'>
         <h2 className='text-2xl font-bold mb-4'>待办事项列表</h2>
+        <Image src='/Tokenpro.png' />
         <TodoForm onAddTodo={addTodo} />
 
         {loading ? (
