@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { Input } from '@workspace/ui/components/input';
+import { Input } from '@/ui/input';
 
 export default async function Page({
   params,

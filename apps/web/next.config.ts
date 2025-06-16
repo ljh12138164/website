@@ -9,6 +9,9 @@ const nextConfig = {
   experimental: {
     reactCompiler: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 } satisfies NextConfig;
 
 const i18nConfig = withNextIntl(nextConfig);

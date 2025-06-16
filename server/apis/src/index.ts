@@ -3,7 +3,6 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { handle } from 'hono/vercel';
-import { createUIMiddleware } from './middleware/ui';
 import { webRouter } from './router/web';
 
 export const runtime = 'edge';
@@ -22,7 +21,7 @@ const app = new Hono()
   .basePath('/api')
   .route('/web', webRouter);
 
-app.route('/ui', createUIMiddleware(app));
+// app.route('/ui', createUIMiddleware(app));
 // 导出端口和fetch函数
 export default handle(app);
 

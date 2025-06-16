@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "npm-run-all --parallel start db:studio",
-    "start": "deno run --watch --unstable-sloppy-imports --allow-all src/index.ts",
+    "start": "bun run src/index.ts",
     "build": "tsup src/index.ts --format esm --dts-only --clean --outDir dist",
     "docker:build:tsup": "tsup /app/src/index.ts --format esm --dts --outDir dist",
     "docker:build": "docker-compose  -f docker-compose.yml build",
@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@vercel/postgres": "^0.10.0",
-    "deno": "^2.3.6",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
     "hono": "latest",

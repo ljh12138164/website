@@ -1,0 +1,446 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import Image from "next/image";
+import '../styles/globals.css'
+
+import Github from "./assets/github.svg";
+import Discord from "./assets/discord.svg";
+import Youtube from "./assets/youtube.svg";
+import Tutorials from "./assets/tutorials.svg";
+import Styling from "./assets/styling.png";
+import Context from "./assets/context.png";
+import Assets from "./assets/assets.png";
+import Docs from "./assets/docs.png";
+import Share from "./assets/share.png";
+import FigmaPlugin from "./assets/figma-plugin.png";
+import Testing from "./assets/testing.png";
+import Accessibility from "./assets/accessibility.png";
+import Theming from "./assets/theming.png";
+import AddonLibrary from "./assets/addon-library.png";
+
+export const RightArrow = () => <svg
+    viewBox="0 0 14 14"
+    width="8px"
+    height="14px"
+    style={{
+      marginLeft: '4px',
+      display: 'inline-block',
+      shapeRendering: 'inherit',
+      verticalAlign: 'middle',
+      fill: 'currentColor',
+      'path fill': 'currentColor'
+    }}
+>
+  <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
+</svg>
+
+<Meta title="配置你的项目" />
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # 配置你的项目
+
+    由于 Storybook 与你的应用程序是分开工作的，你需要针对你的特定技术栈和设置进行配置。下面，探索用流行框架和工具配置 Storybook 的指南。如果你遇到困难，了解如何从我们的社区获取帮助。
+  </div>
+  <div className="sb-section">
+    <div className="sb-section-item">
+      <Image
+        src={Styling}
+        alt="代表不同样式技术的标志墙"
+        width={0}
+        height={0}
+        style={{ width: '100%', height: 'auto' }}
+      />
+      <h4 className="sb-section-item-heading">添加样式和 CSS</h4>
+      <p className="sb-section-item-paragraph">与网络应用程序一样，在 Storybook 中包含 CSS 的方式有很多。了解更多关于在 Storybook 中设置样式的信息。</p>
+      <a
+        href="https://storybook.js.org/docs/configure/styling-and-css/?renderer=react"
+        target="_blank"
+      >了解更多<RightArrow /></a>
+    </div>
+    <div className="sb-section-item">
+      <Image
+        width={0}
+        height={0}
+        style={{ width: '100%', height: 'auto' }}
+        src={Context}
+        alt="表示组件数据组成的抽象图"
+      />
+      <h4 className="sb-section-item-heading">提供上下文和模拟</h4>
+      <p className="sb-section-item-paragraph">当 story 无法渲染时，通常是因为你的组件需要一个特定的环境或上下文（如主题提供者）可用。</p>
+      <a
+        href="https://storybook.js.org/docs/writing-stories/decorators/?renderer=react#context-for-mocking"
+        target="_blank"
+      >了解更多<RightArrow /></a>
+    </div>
+    <div className="sb-section-item">
+      <Image
+        width={0}
+        height={0}
+        style={{ width: '100%', height: 'auto' }}
+        src={Assets}
+        alt="排版和图像资源的表示"
+      />
+      <div>
+        <h4 className="sb-section-item-heading">加载资产和资源</h4>
+        <p className="sb-section-item-paragraph">要将静态文件（如字体）链接到你的项目和 stories，请使用
+        `staticDirs` 配置选项来指定启动 Storybook 时要加载的文件夹。</p>
+        <a
+          href="https://storybook.js.org/docs/configure/images-and-assets/?renderer=react"
+          target="_blank"
+        >了解更多<RightArrow /></a>
+      </div>
+    </div>
+  </div>
+</div>
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # 用 Storybook 做更多事情
+
+    现在你已经了解了基础知识，让我们探索 Storybook 的其他部分，这些部分将改善你的体验。这个列表只是让你入门。你可以以多种方式自定义 Storybook 以满足你的需求。
+  </div>
+
+  <div className="sb-section">
+    <div className="sb-features-grid">
+      <div className="sb-grid-item">
+        <Image
+          width={0}
+          height={0}
+          style={{ width: '100%', height: 'auto' }}
+          src={Docs}
+          alt="显示设置 autodocs 标签，指向生成的文档页面的截图"
+        />
+        <h4 className="sb-section-item-heading">自动文档</h4>
+        <p className="sb-section-item-paragraph">从你的组件和 stories 自动生成活跃的、
+          交互式参考文档。</p>
+        <a
+          href="https://storybook.js.org/docs/writing-docs/autodocs/?renderer=react"
+          target="_blank"
+        >了解更多<RightArrow /></a>
+      </div>
+      <div className="sb-grid-item">
+        <Image
+          width={0}
+          height={0}
+          style={{ width: '100%', height: 'auto' }}
+          src={Share}
+          alt="显示发布到 chromatic.com URL 的 Storybook 的浏览器窗口"
+        />
+        <h4 className="sb-section-item-heading">发布到 Chromatic</h4>
+        <p className="sb-section-item-paragraph">发布你的 Storybook 以与你的整个团队进行评审和协作。</p>
+        <a
+          href="https://storybook.js.org/docs/sharing/publish-storybook/?renderer=react#publish-storybook-with-chromatic"
+          target="_blank"
+        >了解更多<RightArrow /></a>
+      </div>
+      <div className="sb-grid-item">
+        <Image
+          width={0}
+          height={0}
+          style={{ width: '100%', height: 'auto' }}
+          src={FigmaPlugin}
+          alt="在 Figma 中显示 Storybook 插件的窗口"
+        />
+        <h4 className="sb-section-item-heading">Figma 插件</h4>
+        <p className="sb-section-item-paragraph">将你的 stories 嵌入 Figma，在一个地方交叉引用设计和实际
+          实现。</p>
+        <a
+          href="https://storybook.js.org/docs/sharing/design-integrations/?renderer=react#embed-storybook-in-figma-with-the-plugin"
+          target="_blank"
+        >了解更多<RightArrow /></a>
+      </div>
+      <div className="sb-grid-item">
+        <Image
+          width={0}
+          height={0}
+          style={{ width: '100%', height: 'auto' }}
+          src={Testing}
+          alt="测试通过和失败的截图"
+        />
+        <h4 className="sb-section-item-heading">测试</h4>
+        <p className="sb-section-item-paragraph">使用 stories 测试组件的所有变体，无论多么
+          复杂。</p>
+        <a
+          href="https://storybook.js.org/docs/writing-tests/?renderer=react"
+          target="_blank"
+        >了解更多<RightArrow /></a>
+      </div>
+      <div className="sb-grid-item">
+        <Image
+          width={0}
+          height={0}
+          style={{ width: '100%', height: 'auto' }}
+          src={Accessibility}
+          alt="无障碍测试通过和失败的截图"
+        />
+        <h4 className="sb-section-item-heading">无障碍</h4>
+        <p className="sb-section-item-paragraph">在开发过程中自动测试你的组件是否存在无障碍问题。</p>
+        <a
+          href="https://storybook.js.org/docs/writing-tests/accessibility-testing/?renderer=react"
+          target="_blank"
+        >了解更多<RightArrow /></a>
+      </div>
+      <div className="sb-grid-item">
+        <Image
+          width={0}
+          height={0}
+          style={{ width: '100%', height: 'auto' }}
+          src={Theming}
+          alt="明暗模式下的 Storybook 截图"
+        />
+        <h4 className="sb-section-item-heading">主题</h4>
+        <p className="sb-section-item-paragraph">为 Storybook 的 UI 设置主题，使其适合你的项目。</p>
+        <a
+          href="https://storybook.js.org/docs/configure/theming/?renderer=react"
+          target="_blank"
+        >了解更多<RightArrow /></a>
+      </div>
+    </div>
+  </div>
+</div>
+<div className='sb-addon'>
+  <div className='sb-addon-text'>
+    <h4>插件</h4>
+    <p className="sb-section-item-paragraph">将你的工具与 Storybook 集成以连接工作流程。</p>
+    <a
+        href="https://storybook.js.org/addons/"
+        target="_blank"
+      >发现所有插件<RightArrow /></a>
+  </div>
+  <div className='sb-addon-img'>
+    <Image
+      width={650}
+      height={347}
+      src={AddonLibrary}
+      alt="将你的工具与 Storybook 集成以连接工作流程。"
+    />
+  </div>
+</div>
+
+<div className="sb-section sb-socials">
+    <div className="sb-section-item">
+      <Image
+        width={32}
+        height={32}
+        layout="fixed"
+        src={Github}
+        alt="Github 标志"
+        className="sb-explore-image"
+      />
+      加入我们的贡献者，共同构建 UI 开发的未来。
+
+      <a
+        href="https://github.com/storybookjs/storybook"
+        target="_blank"
+      >在 GitHub 上加星标<RightArrow /></a>
+    </div>
+    <div className="sb-section-item">
+      <Image
+        width={33}
+        height={32}
+        layout="fixed"
+        src={Discord}
+        alt="Discord 标志"
+        className="sb-explore-image"
+      />
+      <div>
+        获取支持并与前端开发者聊天。
+
+        <a
+          href="https://discord.gg/storybook"
+          target="_blank"
+        >加入 Discord 服务器<RightArrow /></a>
+      </div>
+    </div>
+    <div className="sb-section-item">
+      <Image
+        width={32}
+        height={32}
+        layout="fixed"
+        src={Youtube}
+        alt="Youtube 标志"
+        className="sb-explore-image"
+      />
+      <div>
+        观看教程、功能预览和访谈。
+
+        <a
+          href="https://www.youtube.com/@chromaticui"
+          target="_blank"
+        >在 YouTube 上观看<RightArrow /></a>
+      </div>
+    </div>
+    <div className="sb-section-item">
+      <Image
+        width={33}
+        height={32}
+        layout="fixed"
+        src={Tutorials}
+        alt="一本书"
+        className="sb-explore-image"
+      />
+      <p>遵循关键工作流程的引导式演练。</p>
+
+      <a
+          href="https://storybook.js.org/tutorials/"
+          target="_blank"
+        >探索教程<RightArrow /></a>
+    </div>
+</div>
+
+<style>
+  {`
+  .sb-container {
+    margin-bottom: 48px;
+  }
+
+  .sb-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  img {
+    object-fit: cover;
+  }
+
+  .sb-section-title {
+    margin-bottom: 32px;
+  }
+
+  .sb-section a:not(h1 a, h2 a, h3 a) {
+    font-size: 14px;
+  }
+
+  .sb-section-item, .sb-grid-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sb-section-item-heading {
+    padding-top: 20px !important;
+    padding-bottom: 5px !important;
+    margin: 0 !important;
+  }
+  .sb-section-item-paragraph {
+    margin: 0;
+    padding-bottom: 10px;
+  }
+
+  .sb-chevron {
+    margin-left: 5px;
+  }
+
+  .sb-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 32px 20px;
+  }
+
+  .sb-socials {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sb-socials p {
+    margin-bottom: 10px;
+  }
+
+  .sb-explore-image {
+    max-height: 32px;
+    align-self: flex-start;
+  }
+
+  .sb-addon {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: #EEF3F8;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: #EEF3F8;
+    height: 180px;
+    margin-bottom: 48px;
+    overflow: hidden;
+  }
+
+  .sb-addon-text {
+    padding-left: 48px;
+    max-width: 240px;
+  }
+
+  .sb-addon-text h4 {
+    padding-top: 0px;
+  }
+
+  .sb-addon-img {
+    position: absolute;
+    left: 345px;
+    top: 0;
+    height: 100%;
+    width: 200%;
+    overflow: hidden;
+  }
+
+  .sb-addon-img img {
+    width: 650px;
+    transform: rotate(-15deg);
+    margin-left: 40px;
+    margin-top: -72px;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0);
+    backface-visibility: hidden;
+  }
+
+  @media screen and (max-width: 800px) {
+    .sb-addon-img {
+      left: 300px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .sb-section {
+      flex-direction: column;
+    }
+
+    .sb-features-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .sb-socials {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sb-addon {
+      height: 280px;
+      align-items: flex-start;
+      padding-top: 32px;
+      overflow: hidden;
+    }
+
+    .sb-addon-text {
+      padding-left: 24px;
+    }
+
+    .sb-addon-img {
+      right: 0;
+      left: 0;
+      top: 130px;
+      bottom: 0;
+      overflow: hidden;
+      height: auto;
+      width: 124%;
+    }
+
+    .sb-addon-img img {
+      width: 1200px;
+      transform: rotate(-12deg);
+      margin-left: 0;
+      margin-top: 48px;
+      margin-bottom: -40px;
+      margin-left: -24px;
+    }
+  }
+  `}
+</style>

@@ -8,9 +8,9 @@ export default function HomeComponent() {
     const { data } = useSuspenseQuery({
         queryKey: ['hello'],
         queryFn: async () => {
-            const res = await client.api.web.user.abc.$get();
-            return res.text();
+            const res = await client.user.abc.$get();
+            return res.json();
         },
     });
-    return <div>{data}</div>;
+    return <div>{data.map((item) => item.name).join(',')}</div>;
 }

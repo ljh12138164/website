@@ -1,11 +1,13 @@
 {
   "extends": "@workspace/config/react-library.json",
   "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "ESNext",
     "baseUrl": ".",
     "paths": {
       "@workspace/ui/*": ["./src/*"]
     }
   },
-  "include": ["."],
+  "include": [".", "typing.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

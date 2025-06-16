@@ -3,7 +3,6 @@ import '@workspace/ui/globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { ReactNode } from 'react';
 
 const fontSans = Geist({
   subsets: ['latin'],
@@ -30,7 +29,7 @@ export async function generateMetadata({
 }
 
 interface RootLayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }
 
@@ -55,7 +54,6 @@ export default async function RootLayout({
                   <h1>{t('home.title')}</h1>
                 </div>
               </nav>
-              {/* 微前端容器 */}
               {children}
               <footer className=' flex-[0_0_50px]'>
                 <h1>{t('home.title')}</h1>

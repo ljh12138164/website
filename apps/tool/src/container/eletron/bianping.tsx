@@ -1,4 +1,4 @@
-import { Input } from '@workspace/ui/components/input';
+import { Input } from '@/components/input';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -99,9 +99,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
               type='number'
               min='1'
               step='0.01'
-              className={`w-full border rounded p-2 ${
-                errors.energyEfficiency ? 'border-red-500' : ''
-              }`}
+              className={`w-full border rounded p-2 ${errors.energyEfficiency ? 'border-red-500' : ''
+                }`}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
           )}
@@ -127,9 +126,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
               type='number'
               min='100'
               step='100'
-              className={`w-full border rounded p-2 ${
-                errors.ratedCoolingPower ? 'border-red-500' : ''
-              }`}
+              className={`w-full border rounded p-2 ${errors.ratedCoolingPower ? 'border-red-500' : ''
+                }`}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
           )}
@@ -152,9 +150,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
               type='number'
               min='100'
               step='100'
-              className={`w-full border rounded p-2 ${
-                errors.ratedHeatingPower ? 'border-red-500' : ''
-              }`}
+              className={`w-full border rounded p-2 ${errors.ratedHeatingPower ? 'border-red-500' : ''
+                }`}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
           )}
@@ -179,9 +176,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
               type='number'
               min='1'
               step='1'
-              className={`w-full border rounded p-2 ${
-                errors.coolingPower ? 'border-red-500' : ''
-              }`}
+              className={`w-full border rounded p-2 ${errors.coolingPower ? 'border-red-500' : ''
+                }`}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
           )}
@@ -209,9 +205,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
               type='number'
               min='1'
               step='1'
-              className={`w-full border rounded p-2 ${
-                errors.heatingPower ? 'border-red-500' : ''
-              }`}
+              className={`w-full border rounded p-2 ${errors.heatingPower ? 'border-red-500' : ''
+                }`}
               onChange={(e) => field.onChange(Number(e.target.value))}
             />
           )}
@@ -240,9 +235,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
                   type='number'
                   min='1'
                   max='365'
-                  className={`w-full border rounded p-2 ${
-                    errors.days ? 'border-red-500' : ''
-                  }`}
+                  className={`w-full border rounded p-2 ${errors.days ? 'border-red-500' : ''
+                    }`}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               )}
@@ -265,9 +259,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
                   type='number'
                   min='1'
                   max='24'
-                  className={`w-full border rounded p-2 ${
-                    errors.hoursPerDay ? 'border-red-500' : ''
-                  }`}
+                  className={`w-full border rounded p-2 ${errors.hoursPerDay ? 'border-red-500' : ''
+                    }`}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               )}
@@ -292,9 +285,8 @@ export function BianPing({ onCalculate }: BianPingProps) {
                   type='number'
                   min='0.1'
                   step='0.01'
-                  className={`w-full border rounded p-2 ${
-                    errors.electricityRate ? 'border-red-500' : ''
-                  }`}
+                  className={`w-full border rounded p-2 ${errors.electricityRate ? 'border-red-500' : ''
+                    }`}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               )}
