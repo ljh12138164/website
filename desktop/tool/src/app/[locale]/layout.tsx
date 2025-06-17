@@ -1,7 +1,6 @@
-import { Providers } from "@/components/provider/providers";
 import "@workspace/ui/globals.css";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const fontSans = Geist({
@@ -33,33 +32,15 @@ interface RootLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: RootLayoutProps) {
-  const { locale } = await params;
-  // 获取当前语言的翻译消息
-  const messages = await getMessages({ locale });
-  const t = await getTranslations({ locale });
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const locale = await getLocale();
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>
-            <div className="flex flex-col min-h-screen">
-              <nav className=" flex-[0_0_50px]">
-                <div>
-                  <h1>{t("home.title")}</h1>
-                </div>
-              </nav>
-              {children}
-              <footer className=" flex-[0_0_50px]">
-                <h1>{t("home.title")}</h1>
-              </footer>
-            </div>
-          </Providers>
+        <NextIntlClientProvider>
+          <div className="flex flex-col min-h-screen">{children}</div>
         </NextIntlClientProvider>
       </body>
     </html>

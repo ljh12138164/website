@@ -20,6 +20,7 @@
     "@types/node": "^20",
     "cross-env": "^7.0.3",
     "tsup": "^8.4.0",
+    "@workspace/config": "workspace:*",
     "typescript": "^5.8.2"
   },
   "dependencies": {

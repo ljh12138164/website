@@ -1,0 +1,5 @@
+{
+  "title": "欢迎访问我们的网站",
+  "description": "这是一个使用Next.js和i18n支持的示例网站。",
+  "notFound": "无此页面"
+}

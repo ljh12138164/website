@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "npm-run-all --parallel start db:studio",
     "start": "bun run src/index.ts",
+    "lint": "biome lint",
     "build": "tsup src/index.ts --format esm --dts-only --clean --outDir dist",
     "docker:build:tsup": "tsup /app/src/index.ts --format esm --dts --outDir dist",
     "docker:build": "docker-compose  -f docker-compose.yml build",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "drizzle-kit": "^0.31.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "biome": "latest"
   }
 }

@@ -64,6 +64,7 @@
     "@tailwindcss/postcss": "^4.0.14",
     "@turbo/gen": "^2.4.4",
     "@types/node": "^20",
+    "biome": "latest",
     "@types/react": "^19.0.0",
     "@workspace/config": "workspace:*",
     "next": "15.3.3",
@@ -80,3 +81,4 @@
     "./hooks/*": "./src/hooks/*.ts"
   }
 }
+

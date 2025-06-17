@@ -2,6 +2,8 @@
   "cSpell.words": [
     "hono",
     "productio",
+    "qiankun",
+    "tauri",
     "tsup"
   ],
   "rust-analyzer.linkedProjects": [
