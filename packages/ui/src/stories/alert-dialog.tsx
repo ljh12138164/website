@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
+import * as React from "react";
+import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
-import { cn } from "@workspace/ui/lib/utils"
-import { buttonVariants } from "@workspace/ui/stories/button"
+import { cn } from "@workspace/ui/lib/utils";
+import { buttonVariants } from "@workspace/ui/stories/button";
 
-function AlertDialog({
+function AlertDialogRoot({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
-  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
+  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
 }
 
 function AlertDialogTrigger({
@@ -17,7 +17,7 @@ function AlertDialogTrigger({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {
   return (
     <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
-  )
+  );
 }
 
 function AlertDialogPortal({
@@ -25,7 +25,7 @@ function AlertDialogPortal({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) {
   return (
     <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
-  )
+  );
 }
 
 function AlertDialogOverlay({
@@ -41,7 +41,7 @@ function AlertDialogOverlay({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogContent({
@@ -60,7 +60,7 @@ function AlertDialogContent({
         {...props}
       />
     </AlertDialogPortal>
-  )
+  );
 }
 
 function AlertDialogHeader({
@@ -73,7 +73,7 @@ function AlertDialogHeader({
       className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogFooter({
@@ -89,7 +89,7 @@ function AlertDialogFooter({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogTitle({
@@ -102,7 +102,7 @@ function AlertDialogTitle({
       className={cn("text-lg font-semibold", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogDescription({
@@ -115,7 +115,7 @@ function AlertDialogDescription({
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogAction({
@@ -127,7 +127,7 @@ function AlertDialogAction({
       className={cn(buttonVariants(), className)}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogCancel({
@@ -139,7 +139,63 @@ function AlertDialogCancel({
       className={cn(buttonVariants({ variant: "outline" }), className)}
       {...props}
     />
-  )
+  );
+}
+
+interface AlertDialogProps {
+  /** 触发器的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#trigger">参数</a> */
+  trigger?: React.ReactNode | string;
+  /** 底部的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#footer">参数</a> */
+  footer?: React.ReactNode | string;
+  /** 标题的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#title">参数</a> */
+  title?: React.ReactNode | string;
+  /** 描述的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#description">参数</a> */
+  description?: React.ReactNode | string;
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof AlertDialogPrimitive.Root>;
+  /** 触发器的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#trigger">参数</a> */
+  triggerProps?: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>;
+  /** 内容区域的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#content">参数</a> */
+  contentProps?: React.ComponentProps<typeof AlertDialogPrimitive.Content>;
+  /** 头部的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#header">参数</a> */
+  headerProps?: React.ComponentProps<"div">;
+  /** 底部的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#footer">参数</a> */
+  footerProps?: React.ComponentProps<"div">;
+  /** 标题的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#title">参数</a> */
+  titleProps?: React.ComponentProps<typeof AlertDialogPrimitive.Title>;
+  /** 描述的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#description">参数</a> */
+  descriptionProps?: React.ComponentProps<
+    typeof AlertDialogPrimitive.Description
+  >;
+}
+
+function AlertDialog({
+  trigger,
+  footer,
+  title,
+  description,
+  rootProps,
+  triggerProps,
+  contentProps,
+  headerProps,
+  footerProps,
+  titleProps,
+  descriptionProps,
+}: AlertDialogProps) {
+  return (
+    <AlertDialogRoot {...rootProps}>
+      <AlertDialogTrigger {...triggerProps}>{trigger}</AlertDialogTrigger>
+      <AlertDialogContent {...contentProps}>
+        <AlertDialogHeader {...headerProps}>
+          <AlertDialogTitle {...titleProps}>{title}</AlertDialogTitle>
+          <AlertDialogDescription {...descriptionProps}>
+            {description}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter {...footerProps}>{footer}</AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialogRoot>
+  );
 }
 
 export {
@@ -154,4 +210,4 @@ export {
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
-}
+};
