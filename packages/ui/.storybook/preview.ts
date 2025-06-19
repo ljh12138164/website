@@ -1,6 +1,5 @@
 import type { Preview } from "@storybook/nextjs";
 import "../src/styles/globals.css";
-import { withI18n } from "storybook-addon-i18n";
 
 const preview: Preview = {
   parameters: {
@@ -17,7 +16,7 @@ const preview: Preview = {
     locale: "zh-CN",
   },
   tags: ["autodocs"],
-  decorators: [withI18n],
+  decorators: [],
 };
 
 export default preview;

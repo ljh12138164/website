@@ -1,5 +1,4 @@
 import type { StorybookConfig } from "@storybook/nextjs";
-import "../styles/globals.css";
 import { join, dirname } from "path";
 
 /**

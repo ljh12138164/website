@@ -1,7 +1,7 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
 const alertVariants = cva(
   "relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
@@ -17,9 +17,9 @@ const alertVariants = cva(
       variant: "default",
     },
   }
-)
+);
 
-function Alert({
+function AlertRoot({
   className,
   variant,
   ...props
@@ -31,7 +31,7 @@ function Alert({
       className={cn(alertVariants({ variant }), className)}
       {...props}
     />
-  )
+  );
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
@@ -44,7 +44,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDescription({
@@ -60,7 +60,38 @@ function AlertDescription({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Alert, AlertTitle, AlertDescription }
+interface AlertProps {
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert#root">参数</a> */
+  rootProps?: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>;
+  /** 标题的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert#title">参数</a> */
+  titleProps?: React.ComponentProps<"div">;
+  /** 描述的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert#description">参数</a> */
+  descriptionProps?: React.ComponentProps<"div">;
+  /** 标题 */
+  title?: React.ReactNode | string;
+  /** 描述 */
+  description?: React.ReactNode | string;
+  /** 内容 */
+  children?: React.ReactNode;
+}
+function Alert({
+  rootProps,
+  titleProps,
+  descriptionProps,
+  title,
+  description,
+  children,
+}: AlertProps) {
+  return (
+    <AlertRoot {...rootProps}>
+      <AlertTitle {...titleProps}>{title}</AlertTitle>
+      <AlertDescription {...descriptionProps}>{description}</AlertDescription>
+      {children}
+    </AlertRoot>
+  );
+}
+
+export { Alert, AlertRoot, AlertTitle, AlertDescription };

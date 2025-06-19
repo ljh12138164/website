@@ -1,11 +1,11 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { ChevronRight, MoreHorizontal } from "lucide-react"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { ChevronRight, MoreHorizontal } from "lucide-react";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
-function Breadcrumb({ ...props }: React.ComponentProps<"nav">) {
-  return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />
+function BreadcrumbRoot({ ...props }: React.ComponentProps<"nav">) {
+  return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
 function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
@@ -18,7 +18,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
@@ -28,7 +28,7 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
       className={cn("inline-flex items-center gap-1.5", className)}
       {...props}
     />
-  )
+  );
 }
 
 function BreadcrumbLink({
@@ -36,9 +36,9 @@ function BreadcrumbLink({
   className,
   ...props
 }: React.ComponentProps<"a"> & {
-  asChild?: boolean
+  asChild?: boolean;
 }) {
-  const Comp = asChild ? Slot : "a"
+  const Comp = asChild ? Slot : "a";
 
   return (
     <Comp
@@ -46,7 +46,7 @@ function BreadcrumbLink({
       className={cn("hover:text-foreground transition-colors", className)}
       {...props}
     />
-  )
+  );
 }
 
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
@@ -59,7 +59,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
       className={cn("text-foreground font-normal", className)}
       {...props}
     />
-  )
+  );
 }
 
 function BreadcrumbSeparator({
@@ -78,7 +78,7 @@ function BreadcrumbSeparator({
       {/* @ts-ignore */}
       {children ?? <ChevronRight />}
     </li>
-  )
+  );
 }
 
 function BreadcrumbEllipsis({
@@ -97,9 +97,47 @@ function BreadcrumbEllipsis({
       <MoreHorizontal className="size-4" />
       <span className="sr-only">More</span>
     </span>
-  )
+  );
+}
+interface BreadcrumbProps {
+  /** 数据 */
+  data: {
+    label: string;
+    href: string;
+  }[];
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/breadcrumb#root">参数</a> */
+  rootProps?: React.ComponentProps<"nav">;
+  /** 列表的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/breadcrumb#list">参数</a> */
+  listProps?: React.ComponentProps<"ol">;
+  /** 项目的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/breadcrumb#item">参数</a> */
+  itemProps?: React.ComponentProps<"li">;
+  /** 链接的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/breadcrumb#link">参数</a> */
+  linkProps?: React.ComponentProps<"a">;
 }
 
+function Breadcrumb({
+  rootProps,
+  data,
+  listProps,
+  itemProps,
+  linkProps,
+}: BreadcrumbProps) {
+  return (
+    <BreadcrumbRoot {...rootProps}>
+      <BreadcrumbList {...listProps}>
+        {data.map((item, index) => (
+          <BreadcrumbItem key={item.label} {...itemProps}>
+            <BreadcrumbLink href={item.href} {...linkProps}>
+              {item.label}
+            </BreadcrumbLink>
+            {index !== data.length - 1 && <BreadcrumbSeparator />}
+            <BreadcrumbSeparator />
+          </BreadcrumbItem>
+        ))}
+      </BreadcrumbList>
+    </BreadcrumbRoot>
+  );
+}
 export {
   Breadcrumb,
   BreadcrumbList,
@@ -108,4 +146,4 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
-}
+};

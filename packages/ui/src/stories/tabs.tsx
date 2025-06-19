@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as TabsPrimitive from "@radix-ui/react-tabs"
+import * as React from "react";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
-function Tabs({
+function TabsRoot({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) {
@@ -15,7 +15,7 @@ function Tabs({
       className={cn("flex flex-col gap-2", className)}
       {...props}
     />
-  )
+  );
 }
 
 function TabsList({
@@ -31,7 +31,7 @@ function TabsList({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function TabsTrigger({
@@ -47,7 +47,7 @@ function TabsTrigger({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function TabsContent({
@@ -60,7 +60,48 @@ function TabsContent({
       className={cn("flex-1 outline-none", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
+export { Tabs, TabsList, TabsTrigger, TabsContent, TabsRoot };
+
+interface TabsProps {
+  /** 数据 */
+  data: {
+    label: string;
+    value: string;
+    content: React.ReactNode;
+  }[];
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/tabs#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof TabsPrimitive.Root>;
+  /** 列表元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/tabs#list">参数</a> */
+  listProps?: React.ComponentProps<typeof TabsPrimitive.List>;
+  /** 触发元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/tabs#trigger">参数</a> */
+  triggerProps?: React.ComponentProps<typeof TabsPrimitive.Trigger>;
+  /** 内容元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/tabs#content">参数</a> */
+  contentProps?: React.ComponentProps<typeof TabsPrimitive.Content>;
+}
+function Tabs({
+  data,
+  rootProps,
+  listProps,
+  triggerProps,
+  contentProps,
+}: TabsProps) {
+  return (
+    <TabsRoot {...rootProps}>
+      <TabsList {...listProps}>
+        {data.map((item) => (
+          <TabsTrigger key={item.value} value={item.value} {...triggerProps}>
+            {item.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {data.map((item) => (
+        <TabsContent key={item.value} value={item.value} {...contentProps}>
+          {item.content}
+        </TabsContent>
+      ))}
+    </TabsRoot>
+  );
+}

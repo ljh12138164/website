@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
-import { type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
+import { type VariantProps } from "class-variance-authority";
 
-import { cn } from "@workspace/ui/lib/utils"
-import { toggleVariants } from "@workspace/ui/stories/toggle"
+import { cn } from "@workspace/ui/lib/utils";
+import { toggleVariants } from "@workspace/ui/stories/toggle";
 
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants>
 >({
   size: "default",
   variant: "default",
-})
+});
 
-function ToggleGroup({
+function ToggleGroupRoot({
   className,
   variant,
   size,
@@ -37,7 +37,7 @@ function ToggleGroup({
         {children}
       </ToggleGroupContext.Provider>
     </ToggleGroupPrimitive.Root>
-  )
+  );
 }
 
 function ToggleGroupItem({
@@ -48,7 +48,7 @@ function ToggleGroupItem({
   ...props
 }: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
   VariantProps<typeof toggleVariants>) {
-  const context = React.useContext(ToggleGroupContext)
+  const context = React.useContext(ToggleGroupContext);
 
   return (
     <ToggleGroupPrimitive.Item
@@ -67,7 +67,50 @@ function ToggleGroupItem({
     >
       {children}
     </ToggleGroupPrimitive.Item>
-  )
+  );
 }
 
-export { ToggleGroup, ToggleGroupItem }
+interface ToggleGroupProps {
+  /** 数据 */
+  data: {
+    label: string;
+    value: string;
+  }[];
+  /** 值 */
+  value?: string[];
+  /** 值改变的回调 */
+  onValueChange?: (value: string[]) => void;
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/toggle-group#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
+    VariantProps<typeof toggleVariants>;
+  /** 默认值 */
+  defaultValue?: string[];
+  /** 项目元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/toggle-group#item">参数</a> */
+  itemProps?: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
+    VariantProps<typeof toggleVariants>;
+}
+function ToggleGroup({
+  data,
+  rootProps,
+  itemProps,
+  defaultValue,
+  value,
+  onValueChange,
+}: ToggleGroupProps) {
+  return (
+    <ToggleGroupRoot
+      {...rootProps}
+      value={value}
+      defaultValue={defaultValue}
+      onValueChange={onValueChange}
+      type="multiple"
+    >
+      {data.map((item) => (
+        <ToggleGroupItem key={item.value} value={item.value} {...itemProps}>
+          {item.label}
+        </ToggleGroupItem>
+      ))}
+    </ToggleGroupRoot>
+  );
+}
+export { ToggleGroup, ToggleGroupItem };

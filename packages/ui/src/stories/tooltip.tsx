@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+import * as React from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
 function TooltipProvider({
   delayDuration = 0,
@@ -15,23 +15,23 @@ function TooltipProvider({
       delayDuration={delayDuration}
       {...props}
     />
-  )
+  );
 }
 
-function Tooltip({
+function TooltipRoot({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
   return (
     <TooltipProvider>
       <TooltipPrimitive.Root data-slot="tooltip" {...props} />
     </TooltipProvider>
-  )
+  );
 }
 
 function TooltipTrigger({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
+  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
 function TooltipContent({
@@ -55,7 +55,39 @@ function TooltipContent({
         <TooltipPrimitive.Arrow className="bg-primary fill-primary z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
-  )
+  );
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+interface TooltipProps {
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/tooltip#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof TooltipPrimitive.Root>;
+  /** 触发元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/tooltip#trigger">参数</a> */
+  triggerProps?: React.ComponentProps<typeof TooltipPrimitive.Trigger>;
+  /** 内容元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/tooltip#content">参数</a> */
+  contentProps?: React.ComponentProps<typeof TooltipPrimitive.Content>;
+  /** 触发元素 */
+  children?: React.ReactNode | string;
+  /** 内容 */
+  content?: React.ReactNode | string;
+}
+function Tooltip({
+  rootProps,
+  triggerProps,
+  contentProps,
+  children,
+  content,
+}: TooltipProps) {
+  return (
+    <TooltipRoot {...rootProps}>
+      <TooltipTrigger {...triggerProps}>{children}</TooltipTrigger>
+      <TooltipContent {...contentProps}>{content}</TooltipContent>
+    </TooltipRoot>
+  );
+}
+export {
+  Tooltip,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+};

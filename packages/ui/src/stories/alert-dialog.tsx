@@ -4,7 +4,7 @@ import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
 import { cn } from "@workspace/ui/lib/utils";
-import { buttonVariants } from "@workspace/ui/stories/button";
+import { Button, buttonVariants } from "@workspace/ui/stories/button";
 
 function AlertDialogRoot({
   ...props
@@ -144,11 +144,13 @@ function AlertDialogCancel({
 
 interface AlertDialogProps {
   /** 触发器的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#trigger">参数</a> */
-  trigger?: React.ReactNode | string;
+  trigger: string;
+  /** 触发器的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#trigger">参数</a> */
+  triggerButtonProps?: React.ComponentProps<typeof Button>;
   /** 底部的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#footer">参数</a> */
   footer?: React.ReactNode | string;
   /** 标题的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#title">参数</a> */
-  title?: React.ReactNode | string;
+  title: React.ReactNode | string;
   /** 描述的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#description">参数</a> */
   description?: React.ReactNode | string;
   /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/alert-dialog#root">参数</a> */
@@ -167,10 +169,17 @@ interface AlertDialogProps {
   descriptionProps?: React.ComponentProps<
     typeof AlertDialogPrimitive.Description
   >;
+  /** 内容 */
+  children?: React.ReactNode;
+  /** 取消的回调 */
+  onCancel?: () => void;
+  /** 确定的回调 */
+  onConfirm?: () => void;
 }
 
 function AlertDialog({
   trigger,
+  triggerButtonProps,
   footer,
   title,
   description,
@@ -181,10 +190,17 @@ function AlertDialog({
   footerProps,
   titleProps,
   descriptionProps,
+  children,
+  onCancel,
+  onConfirm,
 }: AlertDialogProps) {
   return (
     <AlertDialogRoot {...rootProps}>
-      <AlertDialogTrigger {...triggerProps}>{trigger}</AlertDialogTrigger>
+      <AlertDialogTrigger {...triggerProps}>
+        <Button variant="outline" {...triggerButtonProps}>
+          {trigger}
+        </Button>
+      </AlertDialogTrigger>
       <AlertDialogContent {...contentProps}>
         <AlertDialogHeader {...headerProps}>
           <AlertDialogTitle {...titleProps}>{title}</AlertDialogTitle>
@@ -192,7 +208,17 @@ function AlertDialog({
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter {...footerProps}>{footer}</AlertDialogFooter>
+        {children}
+        <AlertDialogFooter {...footerProps}>
+          {footer ? (
+            footer
+          ) : (
+            <>
+              <AlertDialogCancel onClick={onCancel}>取消</AlertDialogCancel>
+              <AlertDialogAction onClick={onConfirm}>确定</AlertDialogAction>
+            </>
+          )}
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialogRoot>
   );
