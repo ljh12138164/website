@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as LabelPrimitive from "@radix-ui/react-label"
+import * as React from "react";
+import * as LabelPrimitive from "@radix-ui/react-label";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
-function Label({
+function LabelRoot({
   className,
   ...props
 }: React.ComponentProps<typeof LabelPrimitive.Root>) {
@@ -18,7 +18,16 @@ function Label({
       )}
       {...props}
     />
-  )
+  );
+}
+interface LabelProps {
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/label#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof LabelPrimitive.Root>;
+  /** 内容 */
+  children?: React.ReactNode;
+}
+function Label({ rootProps, children }: LabelProps) {
+  return <LabelRoot {...rootProps}>{children}</LabelRoot>;
 }
 
-export { Label }
+export { Label, LabelRoot };

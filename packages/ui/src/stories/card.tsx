@@ -1,8 +1,8 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+function CardRoot({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card"
@@ -12,7 +12,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -25,7 +25,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
@@ -35,7 +35,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("leading-none font-semibold", className)}
       {...props}
     />
-  )
+  );
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
@@ -45,7 +45,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />
-  )
+  );
 }
 
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
@@ -58,7 +58,7 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
@@ -68,7 +68,7 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("px-6", className)}
       {...props}
     />
-  )
+  );
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
@@ -78,15 +78,63 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("flex items-center px-6 [.border-t]:pt-6", className)}
       {...props}
     />
-  )
+  );
+}
+interface CardProps {
+  className?: string;
+  /** 标题 */
+  title: string | React.ReactNode;
+  /** 描述 */
+  description: string | React.ReactNode;
+  /** 内容 */
+  content: string | React.ReactNode;
+  /** 底部 */
+  footer: string | React.ReactNode;
+  /** 根元素的属性 */
+  rootProps?: React.ComponentProps<"div">;
+  /** 头部元素的属性 */
+  headerProps?: React.ComponentProps<"div">;
+  /** 内容元素的属性 */
+  contentProps?: React.ComponentProps<"div">;
+  /** 底部元素的属性 */
+  footerProps?: React.ComponentProps<"div">;
+  /** 标题元素的属性 */
+  titleProps?: React.ComponentProps<"div">;
+  /** 描述元素的属性 */
+  descriptionProps?: React.ComponentProps<"div">;
+}
+function Card({
+  className,
+  title,
+  description,
+  content,
+  footer,
+  rootProps,
+  headerProps,
+  contentProps,
+  footerProps,
+  titleProps,
+  descriptionProps,
+}: CardProps) {
+  return (
+    <CardRoot className={className} {...rootProps}>
+      <CardHeader {...headerProps}>
+        <CardTitle {...titleProps}>{title}</CardTitle>
+        <CardDescription {...descriptionProps}>{description}</CardDescription>
+      </CardHeader>
+      <CardContent {...contentProps}>{content}</CardContent>
+      <CardFooter {...footerProps}>{footer}</CardFooter>
+    </CardRoot>
+  );
 }
 
 export {
   Card,
+  CardRoot,
   CardHeader,
   CardFooter,
   CardTitle,
   CardAction,
   CardDescription,
   CardContent,
-}
+};
