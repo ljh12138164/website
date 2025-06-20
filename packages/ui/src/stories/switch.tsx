@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as SwitchPrimitive from "@radix-ui/react-switch"
+import * as React from "react";
+import * as SwitchPrimitive from "@radix-ui/react-switch";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
-function Switch({
+function SwitchRoot({
   className,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
@@ -25,7 +25,13 @@ function Switch({
         )}
       />
     </SwitchPrimitive.Root>
-  )
+  );
 }
-
-export { Switch }
+interface SwitchProps {
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/switch#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof SwitchPrimitive.Root>;
+}
+function Switch({ rootProps }: SwitchProps) {
+  return <SwitchRoot {...rootProps} />;
+}
+export { Switch };
