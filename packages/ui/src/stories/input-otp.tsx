@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { OTPInput, OTPInputContext } from "input-otp"
-import { MinusIcon } from "lucide-react"
+import * as React from "react";
+import { OTPInput, OTPInputContext } from "input-otp";
+import { MinusIcon } from "lucide-react";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
-function InputOTP({
+function InputOTPRoot({
   className,
   containerClassName,
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
-  containerClassName?: string
+  containerClassName?: string;
 }) {
   return (
     <OTPInput
@@ -23,7 +23,7 @@ function InputOTP({
       className={cn("disabled:cursor-not-allowed", className)}
       {...props}
     />
-  )
+  );
 }
 
 function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
@@ -33,7 +33,7 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("flex items-center", className)}
       {...props}
     />
-  )
+  );
 }
 
 function InputOTPSlot({
@@ -41,10 +41,16 @@ function InputOTPSlot({
   className,
   ...props
 }: React.ComponentProps<"div"> & {
-  index: number
+  index: number;
 }) {
-  const inputOTPContext = React.useContext(OTPInputContext)
-  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {}
+  const inputOTPContext = React.useContext(OTPInputContext) as {
+    slots: {
+      char: string;
+      hasFakeCaret: boolean;
+      isActive: boolean;
+    }[];
+  };
+  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
 
   return (
     <div
@@ -63,7 +69,7 @@ function InputOTPSlot({
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
@@ -71,7 +77,40 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
     <div data-slot="input-otp-separator" role="separator" {...props}>
       <MinusIcon />
     </div>
-  )
+  );
 }
-
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+interface InputOTPProps {
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/input-otp#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof OTPInput> & {
+    containerClassName?: string;
+  };
+  /** 组元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/input-otp#group">参数</a> */
+  groupProps?: React.ComponentProps<"div">;
+  /** 插槽元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/input-otp#slot">参数</a> */
+  itemPros?: {
+    key: number;
+    className?: string;
+  };
+}
+function InputOTP({ rootProps, groupProps, itemPros }: InputOTPProps) {
+  return (
+    <InputOTPRoot {...rootProps}>
+      <InputOTPGroup {...groupProps}>
+        {Array.from({ length: itemPros?.key ?? 6 }).map((_, index) => (
+          <InputOTPSlot
+            key={index}
+            index={index}
+            className={itemPros?.className}
+          />
+        ))}
+      </InputOTPGroup>
+    </InputOTPRoot>
+  );
+}
+export {
+  InputOTPRoot,
+  InputOTPGroup,
+  InputOTPSlot,
+  InputOTPSeparator,
+  InputOTP,
+};

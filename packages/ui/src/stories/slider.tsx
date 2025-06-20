@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as SliderPrimitive from "@radix-ui/react-slider"
+import * as React from "react";
+import * as SliderPrimitive from "@radix-ui/react-slider";
 
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 
-function Slider({
+function SliderRoot({
   className,
   defaultValue,
   value,
@@ -18,10 +18,10 @@ function Slider({
       Array.isArray(value)
         ? value
         : Array.isArray(defaultValue)
-          ? defaultValue
-          : [min, max],
+        ? defaultValue
+        : [min, max],
     [value, defaultValue, min, max]
-  )
+  );
 
   return (
     <SliderPrimitive.Root
@@ -57,7 +57,14 @@ function Slider({
         />
       ))}
     </SliderPrimitive.Root>
-  )
+  );
 }
 
-export { Slider }
+interface SliderProps {
+  /** 根元素的属性 <a target="_blank" href="https://www.radix-ui.com/primitives/docs/components/slider#root">参数</a> */
+  rootProps?: React.ComponentProps<typeof SliderPrimitive.Root>;
+}
+function Slider({ rootProps }: SliderProps) {
+  return <SliderRoot {...rootProps} />;
+}
+export { Slider };
