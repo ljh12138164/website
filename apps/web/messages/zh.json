@@ -12,7 +12,7 @@
   },
   "home": {
     "title": "欢迎访问我们的网站",
-    "description": "这是一个使用Next.js和i18n支持的示例网站。"
+    "description": "工作流"
   },
   "about": {
     "title": "关于我们",
