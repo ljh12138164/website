@@ -7,7 +7,7 @@
     "dev": "turbo dev",
     "server:dev": "turbo dev --filter=apis",
     "dev:tool": "turbo dev --filter=tool --filter=webs",
-    "dev:web": "turbo dev --filter=web",
+    "dev:web": "turbo dev --filter=webs --filter=apis",
     "lint:all": "turbo lint",
     "lint": "biome check --fix --unsafe && biome lint .&& pnpm run lint:all"
   },
@@ -48,11 +48,17 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@swc/core"
+      "@swc/core",
+      "@tailwindcss/oxide",
+      "bufferutil",
+      "core-js",
+      "core-js-pure",
+      "esbuild",
+      "sharp",
+      "simple-git-hooks"
     ]
   },
   "dependencies": {
     "npm-run-all": "^4.1.5"
   }
 }
-

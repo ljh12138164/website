@@ -1,16 +1,45 @@
-'use client';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarMenuItem, SidebarProvider } from "@/components/ui/sidebar";
+import { HomeIcon, SettingsIcon, WorkflowIcon } from "lucide-react";
+import Link from "next/link";
 
-import client from "@/service";
-import { useSuspenseQuery } from "@tanstack/react-query";
-
+const Label = [{
+    title: 'Home',
+    icon: <HomeIcon />,
+    href: '/',
+}, {
+    title: 'workflow',
+    icon: <WorkflowIcon />,
+    href: '/',
+}, {
+    title: 'setting',
+    icon: <SettingsIcon />,
+    href: '/',
+}]
 
 export default function HomeComponent() {
-    const { data } = useSuspenseQuery({
-        queryKey: ['hello'],
-        queryFn: async () => {
-            const res = await client.user.abc.$get();
-            return res.json();
-        },
-    });
-    return <div>{data.map((item) => item.name).join(',')}</div>;
+    return <>
+        <SidebarProvider>
+            <Sidebar>
+                <SidebarHeader>
+                    <SidebarGroup>
+                        <SidebarGroupLabel>
+                            {Label.map((item) => (
+                                <SidebarMenuItem key={item.title} title={item.title} >
+                                    <Link href={item.href}>
+                                        {item.icon}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarGroupLabel>
+                    </SidebarGroup>
+                </SidebarHeader>
+                <SidebarContent>
+                    <SidebarGroup />
+                    <SidebarGroup />
+                </SidebarContent>
+                <SidebarFooter />
+            </Sidebar>
+        </SidebarProvider>
+    </>
 }
