@@ -1,8 +1,17 @@
+import { SIDEBAR_ITEMS } from "@/command/home";
+import Header from "@/components/home-container/Header";
 import { Providers } from "@/components/provider/providers";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@/app/global.css";
+import Link from "next/link";
+import "./global.css";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -13,20 +22,6 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 });
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale });
-
-  return {
-    title: t("title"),
-    description: t("description"),
-  };
-}
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -40,7 +35,6 @@ export default async function RootLayout({
   const { locale } = await params;
   // 获取当前语言的翻译消息
   const messages = await getMessages({ locale });
-  const t = await getTranslations({ locale });
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
@@ -48,17 +42,27 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
-            <div className="flex flex-col min-h-screen">
-              <nav className=" flex-[0_0_50px]">
-                <div>
-                  <h1>{t("home.title")}</h1>
-                </div>
-              </nav>
-              {children}
-              <footer className=" flex-[0_0_50px]">
-                <h1>{t("home.title")}</h1>
-              </footer>
-            </div>
+            <SidebarProvider>
+              <Sidebar>
+                <SidebarContent className="flex flex-col gap-2 p-2">
+                  {SIDEBAR_ITEMS.map((item) => (
+                    <SidebarGroup key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="flex items-center gap-2"
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </Link>
+                    </SidebarGroup>
+                  ))}
+                </SidebarContent>
+              </Sidebar>
+              <section className="flex flex-col flex-1">
+                <Header />
+                <main className="flex-1 p-4">{children}</main>
+              </section>
+            </SidebarProvider>
           </Providers>
         </NextIntlClientProvider>
       </body>

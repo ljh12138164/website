@@ -10,20 +10,16 @@
     "settings": "设置",
     "language": "语言"
   },
+  "description": "这是一个使用Next.js和i18n支持的示例网站。",
+  "title": "欢迎访问我们的网站",
   "home": {
     "title": "欢迎访问我们的网站",
     "description": "工作流"
   },
-  "about": {
-    "title": "关于我们",
-    "description": "我们是一支充满激情的开发团队。"
+  "workflow": {
+    "title": "工作流",
+    "description": "这是一个工作流"
   },
-  "error": {
-    "notFound": "页面未找到",
-    "goHome": "返回首页"
-  },
-  "description": "这是一个使用Next.js和i18n支持的示例网站。",
-  "title": "欢迎访问我们的网站",
   "auth": {
     "signInTitle": "登录"
   },
