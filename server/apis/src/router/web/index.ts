@@ -1,5 +1,8 @@
-import { Hono } from 'hono';
-import { userRouter } from './user';
-import 'dotenv';
+import { Hono } from "hono";
+import { userRouter } from "./user";
+import { workflowRouter } from "./workflow";
+import "dotenv";
 
-export const webRouter = new Hono().route('/user', userRouter);
+export const webRouter = new Hono()
+  .route("/user", userRouter)
+  .route("/workflow", workflowRouter);
