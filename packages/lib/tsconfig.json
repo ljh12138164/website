@@ -17,9 +17,9 @@
     "isolatedModules": true,
     "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "dist",
+    "declarationDir": "dist/types",
     "noEmit": false,
     "baseUrl": "."
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

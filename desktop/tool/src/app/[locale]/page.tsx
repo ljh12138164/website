@@ -1,5 +1,5 @@
 export const generateStaticParams = async () => {
-  return [{ locale: "zh" }, { locale: "en" }];
+  return [{ locale: 'zh' }, { locale: 'en' }];
 };
 
 export default async function Home() {

@@ -1,13 +1,14 @@
-import config from "@workspace/config/next.config";
-import { NextConfig } from "next";
-import createNextIntlPlugin from "next-intl/plugin";
-const isProd = process.env.NODE_ENV === "production";
+import config from '@workspace/config/next.config';
+import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
-const internalHost = process.env.TAURI_DEV_HOST || "localhost";
-const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+const isProd = process.env.NODE_ENV === 'production';
+
+const internalHost = process.env.TAURI_DEV_HOST || 'localhost';
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
-  output: "export",
+  output: 'export',
   images: {
     unoptimized: true,
   },
