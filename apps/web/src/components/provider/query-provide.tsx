@@ -1,13 +1,9 @@
 // app/providers.tsx
-'use client'
+'use client';
 
-import {
-  isServer,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
-import * as React from 'react'
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
+import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
+import type * as React from 'react';
 
 function makeQueryClient() {
   return new QueryClient({
@@ -21,29 +17,26 @@ function makeQueryClient() {
         retryDelay: 1000,
       },
     },
-
-  })
+  });
 }
 
-let browserQueryClient: QueryClient | undefined = undefined
+let browserQueryClient: QueryClient | undefined;
 
 function getQueryClient() {
   if (isServer) {
-    return makeQueryClient()
+    return makeQueryClient();
   } else {
-    if (!browserQueryClient) browserQueryClient = makeQueryClient()
-    return browserQueryClient
+    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    return browserQueryClient;
   }
 }
 
 export function QueryProvider(props: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
+  const queryClient = getQueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryStreamedHydration>
-        {props.children}
-      </ReactQueryStreamedHydration>
+      <ReactQueryStreamedHydration>{props.children}</ReactQueryStreamedHydration>
     </QueryClientProvider>
-  )
+  );
 }

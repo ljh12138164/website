@@ -4,15 +4,23 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "postinstall": "pnpm dlx simple-git-hooks",
     "dev": "turbo dev",
     "server:dev": "turbo dev --filter=apis",
     "dev:tool": "turbo dev --filter=tool --filter=webs",
     "dev:web": "turbo dev --filter=webs --filter=apis",
     "lint:all": "turbo lint",
+    "commit": "git add . && cz",
     "lint": "biome check --fix --unsafe && biome lint .&& pnpm run lint:all"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "pnpm lint-staged",
+    "commit-msg": "commitlint -E ${1}"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,jsx,tsx,json,jsonc,vue,scss,css,html}": [
@@ -27,17 +35,25 @@
     ]
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.0.5",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@types/jest": "^30.0.0",
     "@workspace/config": "workspace:*",
-    "biome": "^0.3.3",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "jest": "^30.0.3",
     "lint-staged": "^15.5.0",
     "simple-git-hooks": "^2.11.1",
     "stylelint": "^16.16.0",
+    "ts-jest": "^29.4.0",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
   },
   "engines": {
     "node": ">=20"
   },
+  "packageManager": "pnpm@10.5.2",
   "overrides": {
     "next": "15.3.3",
     "typescript": "5.8.2",

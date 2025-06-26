@@ -1,10 +1,10 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations } from 'next-intl/server';
 
 export const metadata = async () => {
   const t = await getTranslations();
   return {
-    title: t("home.title"),
-    description: t("home.description"),
+    title: t('home.title'),
+    description: t('home.description'),
   };
 };
 

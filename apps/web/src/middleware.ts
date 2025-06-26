@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { defaultLocale, locales } from './i18n/request';
 
 export function middleware(request: NextRequest) {
@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
 
   // 处理语言本地化
   const pathnameIsMissingLocale = locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
   // 如果路径缺少语言前缀，添加默认语言
