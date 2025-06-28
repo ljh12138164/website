@@ -1,7 +1,21 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
   "files": {
-    "experimentalScannerIgnores": ["node_modules", "dist", ".next"]
+    "experimentalScannerIgnores": [
+      "node_modules",
+      "dist",
+      ".next",
+      "apps/**/node_modules",
+      "apps/**/dist",
+      "apps/**/.next"
+    ]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "off"
+      }
+    }
   },
   "linter": {
     "enabled": true,
@@ -24,7 +38,17 @@
       "style": {
         "useConst": "error",
         "noNonNullAssertion": "off",
-        "useTemplate": "error"
+        "useTemplate": "error",
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
       },
       "a11y": {
         "recommended": true,

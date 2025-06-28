@@ -23,7 +23,7 @@ const app = new Hono()
 // 导出端口和fetch函数
 export default handle(app);
 console.log(`🚀🚀🚀服务器启动成功，端口：http://localhost:${process.env.PORT}`);
-console.log(`🚀🚀🚀数据库连接成功,数据库地址：https://local.drizzle.studio`);
+console.log('🚀🚀🚀数据库连接成功,数据库地址：https://local.drizzle.studio');
 
 // 导出trpc类型
 export type AppType = typeof app;
