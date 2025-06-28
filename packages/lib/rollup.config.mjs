@@ -24,7 +24,7 @@ const output = [
     file: 'dist/unpkg/index.umd.js',
     format: 'umd',
     name: 'index',
-    sourcemap: true,
+    sourcemap: false,
   },
 ];
 

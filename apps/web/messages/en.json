@@ -1,26 +1,36 @@
 {
-  "common": {
-    "welcome": "Welcome",
-    "home": "Home",
-    "about": "About",
-    "contact": "Contact",
-    "login": "Login",
-    "register": "Register",
-    "logout": "Logout",
-    "settings": "Settings",
-    "language": "Language"
-  },
-  "description": "This is a sample website with Next.js and i18n support.",
-  "title": "Welcome to our website",
-  "home": {
-    "title": "Welcome to our website",
-    "description": "Workflow"
-  },
-  "workflow": {
-    "title": "Workflow",
-    "description": "Workflow"
-  },
-  "auth": {
-    "signInTitle": "Sign in"
-  }
+	"common": {
+		"welcome": "Welcome",
+		"home": "Home",
+		"about": "About",
+		"contact": "Contact",
+		"login": "Login",
+		"register": "Register",
+		"logout": "Logout",
+		"settings": "Settings",
+		"language": "Language"
+	},
+	"description": "This is a sample website with Next.js and i18n support.",
+	"title": "Welcome to our website",
+	"home": {
+		"title": "Welcome to our website",
+		"description": "Workflow"
+	},
+	"workflow": {
+		"title": "Workflow",
+		"description": "Workflow"
+	},
+	"auth": {
+		"signInTitle": "Sign in",
+		"signInDescription": "Sign in to your account",
+		"signUpTitle": "Sign up",
+		"signUpDescription": "Sign up for a new account",
+		"email": "Email",
+		"password": "Password",
+		"confirmPassword": "Confirm Password",
+		"forgotPassword": "Forgot password?",
+		"noAccount": "Don't have an account?",
+		"haveAccount": "Already have an account?",
+		"rememberMe": "Remember me"
+	}
 }

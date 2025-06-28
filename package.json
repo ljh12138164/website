@@ -11,11 +11,11 @@
     "dev:web": "turbo dev --filter=webs --filter=apis",
     "lint:all": "turbo lint",
     "commit": "git add . && cz",
-    "lint": "biome check --fix --unsafe && biome lint .&& pnpm run lint:all"
+    "lint": "biome check --fix --unsafe"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged",
-    "commit-msg": "commitlint -E ${1}"
+    "commit-msg": "HUSKY=0 pnpm exec commitlint --edit ${GIT_PARAMS}"
   },
   "config": {
     "commitizen": {
@@ -26,7 +26,6 @@
     "*.{js,ts,cjs,mjs,jsx,tsx,json,jsonc,vue,scss,css,html}": [
       "biome check --fix --unsafe",
       "biome check --write --no-errors-on-unmatched",
-      "biome check --write --organize-imports-enabled=false --no-errors-on-unmatched",
       "biome check --write --unsafe --no-errors-on-unmatched",
       "biome lint --write --no-errors-on-unmatched"
     ],

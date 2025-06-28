@@ -227,8 +227,8 @@ importers:
         specifier: ^3.13.0
         version: 3.13.0
       hono:
-        specifier: latest
-        version: 4.8.3
+        specifier: ^4.8.2
+        version: 4.8.2
       input-otp:
         specifier: ^1.4.2
         version: 1.4.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -5025,10 +5025,6 @@ packages:
 
   hono@4.8.2:
     resolution: {integrity: sha512-hM+1RIn9PK1I6SiTNS6/y7O1mvg88awYLFEuEtoiMtRyT3SD2iu9pSFgbBXT3b1Ua4IwzvSTLvwO0SEhDxCi4w==}
-    engines: {node: '>=16.9.0'}
-
-  hono@4.8.3:
-    resolution: {integrity: sha512-jYZ6ZtfWjzBdh8H/0CIFfCBHaFL75k+KMzaM177hrWWm2TWL39YMYaJgB74uK/niRc866NMlH9B8uCvIo284WQ==}
     engines: {node: '>=16.9.0'}
 
   hookified@1.9.1:
@@ -12817,8 +12813,6 @@ snapshots:
       parse-passwd: 1.0.0
 
   hono@4.8.2: {}
-
-  hono@4.8.3: {}
 
   hookified@1.9.1: {}
 
