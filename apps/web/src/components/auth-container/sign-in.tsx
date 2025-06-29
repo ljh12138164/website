@@ -1,22 +1,23 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signInSchema } from "apis";
 import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { toast } from "sonner";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSignIn } from "@/service/user";
 
-const formSchema = z.object({
-	email: z.string().email(),
-	password: z.string().min(8),
-});
+const formSchema = signInSchema;
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function SignIn() {
 	const t = useTranslations();
+	const { signIn, isSignInPending } = useSignIn();
 	const emailId = useId();
 	const passwordId = useId();
 
@@ -29,7 +30,18 @@ export default function SignIn() {
 	});
 
 	function onSubmit(data: FormValues) {
-		console.log(data);
+		signIn(
+			{ json: data },
+			{
+				onSuccess: (data) => {
+					localStorage.setItem("token", data.token);
+					toast.success(t("auth.signInSuccess"));
+				},
+				onError: (error) => {
+					toast.error(error.message);
+				},
+			},
+		);
 	}
 
 	return (
@@ -64,7 +76,7 @@ export default function SignIn() {
 				)}
 			</div>
 
-			<Button type="submit" className="w-full">
+			<Button type="submit" className="w-full" disabled={isSignInPending}>
 				{t("auth.signInTitle")}
 			</Button>
 		</form>

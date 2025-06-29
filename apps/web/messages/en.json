@@ -21,7 +21,10 @@
 		"description": "Workflow"
 	},
 	"auth": {
+		"name": "Name",
 		"signInTitle": "Sign in",
+		"signInSuccess": "Sign in successfully",
+		"signUpSuccess": "Sign up successfully",
 		"signInDescription": "Sign in to your account",
 		"signUpTitle": "Sign up",
 		"signUpDescription": "Sign up for a new account",

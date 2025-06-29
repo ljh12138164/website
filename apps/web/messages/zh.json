@@ -21,7 +21,10 @@
 		"description": "这是一个工作流"
 	},
 	"auth": {
+		"name": "姓名",
 		"signInTitle": "登录",
+		"signInSuccess": "登录成功",
+		"signUpSuccess": "注册成功",
 		"signInDescription": "登录到你的账户",
 		"signUpTitle": "注册",
 		"signUpDescription": "注册一个新账户",
@@ -32,6 +35,5 @@
 		"noAccount": "没有账户？",
 		"haveAccount": "已有账户？",
 		"rememberMe": "记住我"
-	},
-	"show": {}
+	}
 }
