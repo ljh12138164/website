@@ -22,6 +22,7 @@
 	},
 	"auth": {
 		"name": "姓名",
+		"authError": "请先登录",
 		"signInTitle": "登录",
 		"signInSuccess": "登录成功",
 		"signUpSuccess": "注册成功",

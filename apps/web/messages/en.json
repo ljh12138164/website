@@ -22,6 +22,7 @@
 	},
 	"auth": {
 		"name": "Name",
+		"authError": "Please login",
 		"signInTitle": "Sign in",
 		"signInSuccess": "Sign in successfully",
 		"signUpSuccess": "Sign up successfully",

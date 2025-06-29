@@ -1,6 +1,9 @@
 import { Hono } from 'hono';
+import { profileRouter } from './profile';
 import { userRouter } from './user';
 import { workflowRouter } from './workflow';
-import 'dotenv';
 
-export const webRouter = new Hono().route('/user', userRouter).route('/workflow', workflowRouter);
+export const webRouter = new Hono()
+  .route('/user', userRouter)
+  .route('/workflow', workflowRouter)
+  .route('/profile', profileRouter);

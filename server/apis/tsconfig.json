@@ -8,5 +8,5 @@
     "moduleDetection": "force",
     "target": "ESNext"
   },
-  "include": ["type.d.ts"]
+  "include": ["type.d.ts", "src/**/*.ts"]
 }
