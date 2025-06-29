@@ -5,7 +5,6 @@
 ## 技术栈
 
 - 后端: Node.js, Hono, TypeScript
-- 加密算法: AES-256-CBC
 
 ## 安装依赖
 

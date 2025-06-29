@@ -3,7 +3,10 @@
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
+    "module": "preserve",
     "moduleResolution": "bundler",
+    "moduleDetection": "force",
     "target": "ESNext"
-  }
+  },
+  "include": ["type.d.ts"]
 }

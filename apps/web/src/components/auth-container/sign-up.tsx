@@ -1,47 +1,67 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpSchema } from "apis";
 import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import toast from "react-hot-toast";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSignUp } from "@/service/user";
 
-const formSchema = z
-	.object({
-		email: z.string().email(),
-		password: z.string().min(8),
-		confirmPassword: z.string().min(8),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: "Passwords don't match",
-		path: ["confirmPassword"],
-	});
+const formSchema = signUpSchema;
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function SignUp() {
 	const t = useTranslations();
+	const { signUp, isSignUpPending } = useSignUp();
+	const nameId = useId();
 	const emailId = useId();
 	const passwordId = useId();
-	const confirmPasswordId = useId();
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			name: "",
 			email: "",
 			password: "",
-			confirmPassword: "",
 		},
 	});
 
 	function onSubmit(data: FormValues) {
-		console.log(data);
+		signUp(
+			{ json: data },
+			{
+				onSuccess: (data) => {
+					localStorage.setItem("token", data.token);
+					toast.success(t("auth.signUpSuccess"));
+				},
+				onError: (error) => {
+					toast.error(error.message);
+				},
+			},
+		);
 	}
 
 	return (
 		<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+			<div className="space-y-2">
+				<Label htmlFor={nameId}>{t("auth.name")}</Label>
+				<Input
+					placeholder={t("auth.name")}
+					id={nameId}
+					type="text"
+					{...form.register("name")}
+				/>
+				{form.formState.errors.name && (
+					<p className="text-sm text-red-500">
+						{form.formState.errors.name.message}
+					</p>
+				)}
+			</div>
 			<div className="space-y-2">
 				<Label htmlFor={emailId}>{t("auth.email")}</Label>
 				<Input
@@ -72,21 +92,7 @@ export default function SignUp() {
 				)}
 			</div>
 
-			<div className="space-y-2">
-				<Label htmlFor={confirmPasswordId}>{t("auth.confirmPassword")}</Label>
-				<Input
-					id={confirmPasswordId}
-					type="password"
-					{...form.register("confirmPassword")}
-				/>
-				{form.formState.errors.confirmPassword && (
-					<p className="text-sm text-red-500">
-						{form.formState.errors.confirmPassword.message}
-					</p>
-				)}
-			</div>
-
-			<Button type="submit" className="w-full">
+			<Button type="submit" className="w-full" disabled={isSignUpPending}>
 				{t("auth.signUpTitle")}
 			</Button>
 		</form>

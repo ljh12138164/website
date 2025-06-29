@@ -1,15 +1,17 @@
 {
   "name": "apis",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "src/types/index.ts",
   "scripts": {
     "dev": "npm-run-all --parallel start db:studio",
-    "start": "bun run local.ts --watch",
+    "start": "cross-env NODE_ENV=bun && bun run src/index.ts --watch",
     "lint": "biome lint",
     "build:tsup": "tsup src/index.ts --format esm --dts-only --clean --outDir dist",
     "docker:build:tsup": "tsup /app/src/index.ts --format esm --dts --outDir dist",
     "docker:build": "docker-compose  -f docker-compose.yml build",
     "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "vercel": "vercel",
     "deploy": "vercel --prod"
@@ -19,17 +21,20 @@
     "@hono/zod-validator": "^0.7.0",
     "@vercel/postgres": "^0.10.0",
     "await-to-js": "^3.0.0",
+    "postgres": "^3.4.7",
+    "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
     "hono": "4.8.2",
+    "jose": "^6.0.11",
     "npm-run-all": "^4.1.5",
     "vercel": "43.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "biome": "latest",
+    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.31.1",
-    "postgres": "^3.4.7",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3"
   }
