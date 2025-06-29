@@ -1,38 +1,84 @@
 import bcrypt from 'bcryptjs';
 import * as jose from 'jose';
 import type { UserInfo } from '../types';
+
 /**
- * ### 加密密码
- * 使用bcryptjs库进行加密
+ * 密码加密选项
+ */
+const BCRYPT_SALT_ROUNDS = 10;
+
+/**
+ * 加密密码
  */
 export const hashPassword = async (
   password: string,
 ): Promise<{ salt: string; hashedPassword: string }> => {
-  // 生成盐
-  const salt = await bcrypt.genSalt(10);
-  // 加密密码
+  const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
   const hashedPassword = await bcrypt.hash(password, salt);
   return { salt, hashedPassword };
 };
 
 /**
- * ### 比较密码
- * 使用bcryptjs库进行比较
+ * 比较密码
  */
-export const comparePassword = async (password: string, hash: string) => {
-  return await bcrypt.compare(password, hash);
+export const verifyPassword = async (
+  plainPassword: string,
+  hashedPassword: string,
+): Promise<boolean> => {
+  return bcrypt.compare(plainPassword, hashedPassword);
 };
 
 /**
- * ### 创建token
+ * 比较密码
  */
-export const createToken = async ({ userId, role, avatar, name, email }: UserInfo) => {
+export const comparePasswordWithSalt = async (
+  plainPassword: string,
+  salt: string,
+  storedHash: string,
+): Promise<boolean> => {
+  const hashedPassword = await bcrypt.hash(plainPassword, salt);
+  return hashedPassword === storedHash;
+};
+
+/**
+ * 创建JWT token
+ */
+export const createToken = async (userInfo: UserInfo): Promise<string> => {
+  const { userId, role, avatar, name, email } = userInfo;
+
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is not set');
+  }
+
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-  // 创建token
-  const token = await new jose.SignJWT({ userId, role, avatar, name, email })
+
+  return await new jose.SignJWT({
+    sub: userId,
+    userId,
+    role,
+    avatar,
+    name,
+    email,
+  })
     .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
     .setExpirationTime('7d')
     .sign(secret);
-  // 返回token
-  return token;
+};
+
+/**
+ * 验证和解码JWT token
+ */
+export const verifyToken = async (token: string): Promise<jose.JWTVerifyResult | null> => {
+  try {
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET environment variable is not set');
+    }
+
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    return await jose.jwtVerify(token, secret);
+  } catch (error) {
+    console.error('Token verification failed:', error);
+    return null;
+  }
 };

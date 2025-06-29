@@ -18,8 +18,11 @@ export const toPromise = async <T>(
 
 export const toInterceptor = async <T>(promise: Promise<T>, c: Context, autoThrow = true) => {
   const [error, result] = await to(promise);
+  console.log(error, result);
   if (error && autoThrow) {
     throw interceptor(error, c);
   }
   if (!result) return result;
+
+  return result;
 };

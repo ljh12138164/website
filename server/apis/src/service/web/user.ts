@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import db from '../../db';
 import { usersTable } from '../../db/schema';
 import type { Role, SignInParams, SignUpParams } from '../../types';
-import { comparePassword, createToken, hashPassword } from '../../utils/crypto';
+import { comparePasswordWithSalt, createToken, hashPassword } from '../../utils/crypto';
 import { toPromise } from '../../utils/promise';
 
 /**
@@ -23,10 +23,13 @@ export const signIn = async ({ email, password }: Omit<SignInParams, 'name'>) =>
     throw new Error('用户不存在');
   }
   // 比较密码
-  const isPasswordValid = await comparePassword(password, user.password);
+  const isPasswordValid = await comparePasswordWithSalt(password, user.salt, user.password);
   if (!isPasswordValid) throw new Error('密码错误');
-
-  return user;
+  const token = await toPromise(createToken({ ...user, userId: user.id }));
+  return {
+    ...user,
+    token,
+  };
 };
 
 /**
@@ -34,7 +37,14 @@ export const signIn = async ({ email, password }: Omit<SignInParams, 'name'>) =>
  */
 export const signUp = async ({ email, password, name }: Omit<SignUpParams, 'salt'>) => {
   // 查询用户是否存在
-  const user = await db.select().from(usersTable).where(eq(usersTable.email, email));
+  const user = await toPromise(
+    db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
+      .limit(1)
+      .then((res) => res[0]),
+  );
   if (user) throw new Error('用户已存在');
 
   // 加密密码

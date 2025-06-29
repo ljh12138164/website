@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "apis";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
@@ -17,6 +18,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function SignIn() {
 	const t = useTranslations();
+	const router = useRouter();
 	const { signIn, isSignInPending } = useSignIn();
 	const emailId = useId();
 	const passwordId = useId();
@@ -34,8 +36,10 @@ export default function SignIn() {
 			{ json: data },
 			{
 				onSuccess: (data) => {
+					if (!data.token) return;
 					localStorage.setItem("token", data.token);
 					toast.success(t("auth.signInSuccess"));
+					router.push("/");
 				},
 				onError: (error) => {
 					toast.error(error.message);

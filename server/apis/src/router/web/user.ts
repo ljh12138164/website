@@ -5,9 +5,6 @@ import { signIn, signUp } from '../../service/web/user';
 import { toInterceptor } from '../../utils/promise';
 
 export const userRouter = new Hono()
-  .get('/test', async (c) => {
-    return c.json({ message: 'Hello, World!' });
-  })
   /**
    * ### 用户登录
    */

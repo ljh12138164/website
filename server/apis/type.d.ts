@@ -1,4 +1,4 @@
-import type { Role } from './src';
+import type { Role, UserInfo } from './src';
 
 declare module 'jose' {
   interface JWTPayload {
@@ -7,5 +7,11 @@ declare module 'jose' {
     avatar: string;
     name: string;
     email: string;
+  }
+}
+
+declare module 'hono' {
+  interface ContextVariableMap {
+    userInfo: UserInfo;
   }
 }
