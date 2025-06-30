@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["hono", "productio", "qiankun", "tauri", "tsup"],
+  "cSpell.words": ["hono", "productio", "qiankun", "tauri", "tsup", "weixin"],
   "rust-analyzer.linkedProjects": [
     "./desktop/tool/src-tauri/Cargo.toml",
     "./rust/hello/Cargo.toml"
