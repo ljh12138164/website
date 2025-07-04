@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvide } from "../auth-container/auth-provide";
 import { QueryProvider } from "./query-provide";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+function Providers({ children }: { children: React.ReactNode }) {
 	return (
 		<Suspense fallback={<div>加载中...</div>}>
 			<div className="h-[100dvh] overflow-hidden">
@@ -43,3 +43,4 @@ export function Providers({ children }: { children: React.ReactNode }) {
 		</Suspense>
 	);
 }
+export default Providers;

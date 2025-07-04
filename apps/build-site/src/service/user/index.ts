@@ -1,8 +1,8 @@
 'use client';
 import { useMutation } from '@tanstack/react-query';
 import type { InferRequestType, InferResponseType } from 'hono/client';
-import { handleRequest } from '@/utils';
 import client from '..';
+import { handleRequest } from '@/src/utils';
 
 type SignInParams = InferRequestType<typeof client.user.signIn.$post>;
 type SignInResponse = InferResponseType<typeof client.user.signIn.$post, 200>;

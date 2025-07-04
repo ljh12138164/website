@@ -1,4 +1,4 @@
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/src/hooks/use-auth';
 
 export function AuthProvide({ children }: { children: React.ReactNode }) {
   const { isLoading } = useAuth();
