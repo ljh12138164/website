@@ -3,8 +3,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useGetUserInfo } from '@/service/user';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '../store/auth';
+import { useGetUserInfo } from '../service/user';
 
 const isJumpPath = ['/'];
 export const useAuth = () => {
