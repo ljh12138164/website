@@ -23,7 +23,7 @@ export const signIn = async ({ email, password }: Omit<SignInParams, 'name'>) =>
     throw new Error('用户不存在');
   }
   // 比较密码
-  const isPasswordValid = await comparePasswordWithSalt(password, user.salt, user.password);
+  const isPasswordValid = await comparePasswordWithSalt(password, user.salt!, user.password!);
   if (!isPasswordValid) throw new Error('密码错误');
   const token = await toPromise(createToken({ ...user, userId: user.id }));
   return {
