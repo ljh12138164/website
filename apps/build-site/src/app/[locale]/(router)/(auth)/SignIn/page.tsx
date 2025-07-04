@@ -1,6 +1,6 @@
+import AuthCard from '@/src/components/auth-container/auth-card';
+import SignIn from '@/src/components/auth-container/sign-in';
 import { getTranslations } from 'next-intl/server';
-import AuthCard from '@/components/auth-container/auth-card';
-import SignIn from '@/components/auth-container/sign-in';
 
 export default async function Page() {
   const t = await getTranslations();
