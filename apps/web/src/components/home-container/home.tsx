@@ -31,30 +31,28 @@ const Label = [
 
 export default function HomeComponent() {
 	return (
-		<>
-			<SidebarProvider>
-				<Sidebar>
-					<SidebarHeader>
-						<SidebarGroup>
-							<SidebarGroupLabel>
-								{Label.map((item) => (
-									<SidebarMenuItem key={item.title} title={item.title}>
-										<Link href={item.href}>
-											{item.icon}
-											<span>{item.title}</span>
-										</Link>
-									</SidebarMenuItem>
-								))}
-							</SidebarGroupLabel>
-						</SidebarGroup>
-					</SidebarHeader>
-					<SidebarContent>
-						<SidebarGroup />
-						<SidebarGroup />
-					</SidebarContent>
-					<SidebarFooter />
-				</Sidebar>
-			</SidebarProvider>
-		</>
+		<SidebarProvider>
+			<Sidebar>
+				<SidebarHeader>
+					<SidebarGroup>
+						<SidebarGroupLabel>
+							{Label.map((item) => (
+								<SidebarMenuItem key={item.title} title={item.title}>
+									<Link href={item.href}>
+										{item.icon}
+										<span>{item.title}</span>
+									</Link>
+								</SidebarMenuItem>
+							))}
+						</SidebarGroupLabel>
+					</SidebarGroup>
+				</SidebarHeader>
+				<SidebarContent>
+					<SidebarGroup />
+					<SidebarGroup />
+				</SidebarContent>
+				<SidebarFooter />
+			</Sidebar>
+		</SidebarProvider>
 	);
 }

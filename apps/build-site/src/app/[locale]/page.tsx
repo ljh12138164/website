@@ -10,5 +10,5 @@ export const metadata = async () => {
 
 export default async function Home() {
   // 获取翻译函数
-  return <></>;
+  return null;
 }
