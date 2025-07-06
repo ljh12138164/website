@@ -36,11 +36,11 @@ export default function HomeComponent() {
 				<SidebarHeader>
 					<SidebarGroup>
 						<SidebarGroupLabel>
-							{Label.map((item) => (
-								<SidebarMenuItem key={item.title} title={item.title}>
-									<Link href={item.href}>
-										{item.icon}
-										<span>{item.title}</span>
+							{Label.map(({ title, icon, href }) => (
+								<SidebarMenuItem key={title} title={title}>
+									<Link href={href}>
+										{icon}
+										<span>{title}</span>
 									</Link>
 								</SidebarMenuItem>
 							))}
