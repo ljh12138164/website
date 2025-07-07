@@ -69,7 +69,14 @@ export default function Render({ data }: { data: { path: string; code: string }[
     <div>
       <h2>✅ 客户端组件中渲染的动态组件：</h2>
       {error && (
-        <div style={{ color: 'red', padding: '10px', border: '1px solid red', margin: '10px 0' }}>
+        <div
+          style={{
+            color: 'red',
+            padding: '10px',
+            border: '1px solid red',
+            margin: '10px 0',
+          }}
+        >
           {error}
         </div>
       )}

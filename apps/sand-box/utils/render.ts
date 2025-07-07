@@ -1,8 +1,3 @@
-import esbuild from 'esbuild-wasm';
-import React from 'react';
-import * as Button from '@/components/ui/button';
-import * as Input from '@/components/ui/input';
-import * as Textarea from '@/components/ui/textarea';
 import * as Accordion from '@/components/ui/accordion';
 import * as Alert from '@/components/ui/alert';
 import * as AlertDialog from '@/components/ui/alert-dialog';
@@ -10,6 +5,7 @@ import * as AspectRatio from '@/components/ui/aspect-ratio';
 import * as Avatar from '@/components/ui/avatar';
 import * as Badge from '@/components/ui/badge';
 import * as Breadcrumb from '@/components/ui/breadcrumb';
+import * as Button from '@/components/ui/button';
 import * as Calendar from '@/components/ui/calendar';
 import * as Card from '@/components/ui/card';
 import * as Carousel from '@/components/ui/carousel';
@@ -22,6 +18,7 @@ import * as Drawer from '@/components/ui/drawer';
 import * as DropdownMenu from '@/components/ui/dropdown-menu';
 import * as Form from '@/components/ui/form';
 import * as HoverCard from '@/components/ui/hover-card';
+import * as Input from '@/components/ui/input';
 import * as InputOTP from '@/components/ui/input-otp';
 import * as Label from '@/components/ui/label';
 import * as Menubar from '@/components/ui/menubar';
@@ -42,10 +39,76 @@ import * as Sonner from '@/components/ui/sonner';
 import * as Switch from '@/components/ui/switch';
 import * as Table from '@/components/ui/table';
 import * as Tabs from '@/components/ui/tabs';
+import * as Textarea from '@/components/ui/textarea';
 import * as Toggle from '@/components/ui/toggle';
 import * as ToggleGroup from '@/components/ui/toggle-group';
 import * as Tooltip from '@/components/ui/tooltip';
 import to from 'await-to-js';
+import esbuild from 'esbuild-wasm';
+import * as Lucide from 'lucide-react';
+import * as Cache from 'next/cache';
+import * as CompatRouter from 'next/compat/router';
+
+import * as Image from 'next/image';
+import * as Link from 'next/link';
+import * as Navigation from 'next/navigation';
+import * as Router from 'next/router';
+import * as Script from 'next/script';
+import * as Server from 'next/server';
+import * as WebVitals from 'next/web-vitals';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
+const uiComponentMap: UIComponentMap = {
+  '@/components/ui/button': { default: Button.Button, ...Button },
+  '@/components/ui/input': { default: Input.Input, ...Input },
+  '@/components/ui/textarea': { default: Textarea.Textarea, ...Textarea },
+  '@/components/ui/accordion': { default: Accordion.Accordion, ...Accordion },
+  '@/components/ui/alert': { default: Alert.Alert, ...Alert },
+  '@/components/ui/alert-dialog': { default: AlertDialog.AlertDialog, ...AlertDialog },
+  '@/components/ui/aspect-ratio': { default: AspectRatio.AspectRatio, ...AspectRatio },
+  '@/components/ui/avatar': { default: Avatar.Avatar, ...Avatar },
+  '@/components/ui/badge': { default: Badge.Badge, ...Badge },
+  '@/components/ui/breadcrumb': { default: Breadcrumb.Breadcrumb, ...Breadcrumb },
+  '@/components/ui/calendar': { default: Calendar.Calendar, ...Calendar },
+  '@/components/ui/card': { default: Card.Card, ...Card },
+  '@/components/ui/carousel': { default: Carousel.Carousel, ...Carousel },
+  '@/components/ui/chart': { default: Chart.ChartContainer, ...Chart },
+  '@/components/ui/checkbox': { default: Checkbox.Checkbox, ...Checkbox },
+  '@/components/ui/collapsible': { default: Collapsible.Collapsible, ...Collapsible },
+  '@/components/ui/context-menu': { default: ContextMenu.ContextMenu, ...ContextMenu },
+  '@/components/ui/dialog': { default: Dialog.Dialog, ...Dialog },
+  '@/components/ui/drawer': { default: Drawer.Drawer, ...Drawer },
+  '@/components/ui/dropdown-menu': { default: DropdownMenu.DropdownMenu, ...DropdownMenu },
+  '@/components/ui/form': { default: Form.Form, ...Form },
+  '@/components/ui/hover-card': { default: HoverCard.HoverCard, ...HoverCard },
+  '@/components/ui/input-otp': { default: InputOTP.InputOTP, ...InputOTP },
+  '@/components/ui/label': { default: Label.Label, ...Label },
+  '@/components/ui/menubar': { default: Menubar.Menubar, ...Menubar },
+  '@/components/ui/navigation-menu': {
+    default: NavigationMenu.NavigationMenu,
+    ...NavigationMenu,
+  },
+  '@/components/ui/pagination': { default: Pagination.Pagination, ...Pagination },
+  '@/components/ui/popover': { default: Popover.Popover, ...Popover },
+  '@/components/ui/progress': { default: Progress.Progress, ...Progress },
+  '@/components/ui/radio-group': { default: RadioGroup.RadioGroup, ...RadioGroup },
+  '@/components/ui/resizable': { default: Resizable.ResizableHandle, ...Resizable },
+  '@/components/ui/scroll-area': { default: ScrollArea.ScrollArea, ...ScrollArea },
+  '@/components/ui/select': { default: Select.Select, ...Select },
+  '@/components/ui/separator': { default: Separator.Separator, ...Separator },
+  '@/components/ui/sheet': { default: Sheet.Sheet, ...Sheet },
+  '@/components/ui/sidebar': { default: Sidebar.Sidebar, ...Sidebar },
+  '@/components/ui/skeleton': { default: Skeleton.Skeleton, ...Skeleton },
+  '@/components/ui/slider': { default: Slider.Slider, ...Slider },
+  '@/components/ui/sonner': { default: Sonner.Toaster, ...Sonner },
+  '@/components/ui/switch': { default: Switch.Switch, ...Switch },
+  '@/components/ui/table': { default: Table.Table, ...Table },
+  '@/components/ui/tabs': { default: Tabs.Tabs, ...Tabs },
+  '@/components/ui/toggle': { default: Toggle.Toggle, ...Toggle },
+  '@/components/ui/toggle-group': { default: ToggleGroup.ToggleGroup, ...ToggleGroup },
+  '@/components/ui/tooltip': { default: Tooltip.Tooltip, ...Tooltip },
+};
 
 // 定义模块类型
 interface ModuleType {
@@ -101,6 +164,7 @@ export async function compileAndRender(
   // 定义require函数
   const require: RequireFunction = (mod: string) => {
     if (mod === 'react') return React;
+    if (mod === 'react-dom') return ReactDOM;
     if (mod === 'react/jsx-runtime') {
       return {
         jsx: React.createElement,
@@ -109,57 +173,19 @@ export async function compileAndRender(
       };
     }
 
+    if (mod === 'lucide-react') return Lucide;
+    if (mod === 'next/image') return Image;
+    if (mod === 'next/link') return Link;
+    if (mod === 'next/router') return Router;
+    if (mod === 'next/cache') return Cache;
+    if (mod === 'next/server') return Server;
+    if (mod === 'next/script') return Script;
+    if (mod === 'next/navigation') return Navigation;
+    if (mod === 'next/compat/router') return CompatRouter;
+    if (mod === 'next/web-vitals') return WebVitals;
+
+    // if (nextComponentMap[mod]) return nextComponentMap[mod];
     // shadcn/ui 组件映射
-    const uiComponentMap: UIComponentMap = {
-      '@/components/ui/button': { default: Button.Button, ...Button },
-      '@/components/ui/input': { default: Input.Input, ...Input },
-      '@/components/ui/textarea': { default: Textarea.Textarea, ...Textarea },
-      '@/components/ui/accordion': { default: Accordion.Accordion, ...Accordion },
-      '@/components/ui/alert': { default: Alert.Alert, ...Alert },
-      '@/components/ui/alert-dialog': { default: AlertDialog.AlertDialog, ...AlertDialog },
-      '@/components/ui/aspect-ratio': { default: AspectRatio.AspectRatio, ...AspectRatio },
-      '@/components/ui/avatar': { default: Avatar.Avatar, ...Avatar },
-      '@/components/ui/badge': { default: Badge.Badge, ...Badge },
-      '@/components/ui/breadcrumb': { default: Breadcrumb.Breadcrumb, ...Breadcrumb },
-      '@/components/ui/calendar': { default: Calendar.Calendar, ...Calendar },
-      '@/components/ui/card': { default: Card.Card, ...Card },
-      '@/components/ui/carousel': { default: Carousel.Carousel, ...Carousel },
-      '@/components/ui/chart': { default: Chart.ChartContainer, ...Chart },
-      '@/components/ui/checkbox': { default: Checkbox.Checkbox, ...Checkbox },
-      '@/components/ui/collapsible': { default: Collapsible.Collapsible, ...Collapsible },
-      '@/components/ui/context-menu': { default: ContextMenu.ContextMenu, ...ContextMenu },
-      '@/components/ui/dialog': { default: Dialog.Dialog, ...Dialog },
-      '@/components/ui/drawer': { default: Drawer.Drawer, ...Drawer },
-      '@/components/ui/dropdown-menu': { default: DropdownMenu.DropdownMenu, ...DropdownMenu },
-      '@/components/ui/form': { default: Form.Form, ...Form },
-      '@/components/ui/hover-card': { default: HoverCard.HoverCard, ...HoverCard },
-      '@/components/ui/input-otp': { default: InputOTP.InputOTP, ...InputOTP },
-      '@/components/ui/label': { default: Label.Label, ...Label },
-      '@/components/ui/menubar': { default: Menubar.Menubar, ...Menubar },
-      '@/components/ui/navigation-menu': {
-        default: NavigationMenu.NavigationMenu,
-        ...NavigationMenu,
-      },
-      '@/components/ui/pagination': { default: Pagination.Pagination, ...Pagination },
-      '@/components/ui/popover': { default: Popover.Popover, ...Popover },
-      '@/components/ui/progress': { default: Progress.Progress, ...Progress },
-      '@/components/ui/radio-group': { default: RadioGroup.RadioGroup, ...RadioGroup },
-      '@/components/ui/resizable': { default: Resizable.ResizableHandle, ...Resizable },
-      '@/components/ui/scroll-area': { default: ScrollArea.ScrollArea, ...ScrollArea },
-      '@/components/ui/select': { default: Select.Select, ...Select },
-      '@/components/ui/separator': { default: Separator.Separator, ...Separator },
-      '@/components/ui/sheet': { default: Sheet.Sheet, ...Sheet },
-      '@/components/ui/sidebar': { default: Sidebar.Sidebar, ...Sidebar },
-      '@/components/ui/skeleton': { default: Skeleton.Skeleton, ...Skeleton },
-      '@/components/ui/slider': { default: Slider.Slider, ...Slider },
-      '@/components/ui/sonner': { default: Sonner.Toaster, ...Sonner },
-      '@/components/ui/switch': { default: Switch.Switch, ...Switch },
-      '@/components/ui/table': { default: Table.Table, ...Table },
-      '@/components/ui/tabs': { default: Tabs.Tabs, ...Tabs },
-      '@/components/ui/toggle': { default: Toggle.Toggle, ...Toggle },
-      '@/components/ui/toggle-group': { default: ToggleGroup.ToggleGroup, ...ToggleGroup },
-      '@/components/ui/tooltip': { default: Tooltip.Tooltip, ...Tooltip },
-    };
 
     // 检查是否是ui组件
     if (uiComponentMap[mod]) {
@@ -193,7 +219,7 @@ export async function compileAndRender(
     throw new Error(`Cannot require module "${mod}"`);
   };
 
-  // 定义一个与React绑定的执行函数
+  // 定义一个与React绑定的执行函数---
   safeEvalFunction(
     ['React', 'module', 'exports', 'require'],
     result.code,
