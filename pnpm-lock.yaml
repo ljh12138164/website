@@ -268,6 +268,7 @@ importers:
       '@types/node': ^20
       '@types/react': ^19
       '@types/react-dom': ^19
+      apis: workspace:*
       await-to-js: ^3.0.0
       babel-plugin-react-compiler: 19.1.0-rc.2
       class-variance-authority: ^0.7.1
@@ -323,6 +324,7 @@ importers:
       '@radix-ui/react-toggle': 1.1.9_supdkcrbntv5z6xiacrz5nyyki
       '@radix-ui/react-toggle-group': 1.1.10_supdkcrbntv5z6xiacrz5nyyki
       '@radix-ui/react-tooltip': 1.2.7_supdkcrbntv5z6xiacrz5nyyki
+      apis: link:../../server/apis
       await-to-js: 3.0.0
       babel-plugin-react-compiler: 19.1.0-rc.2
       class-variance-authority: 0.7.1
