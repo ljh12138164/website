@@ -1,6 +1,6 @@
-import { pgEnum, pgTable, primaryKey, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
-import { Role } from '../types';
 import { relations } from 'drizzle-orm';
+import { pgEnum, pgTable, primaryKey, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { Role } from '../types';
 
 export const roleEnum = pgEnum('role', [Role.User, Role.Admin]);
 
@@ -50,4 +50,18 @@ export const userRelatives = relations(userOauthTable, ({ one }) => {
       references: [usersTable.id],
     }),
   };
+});
+
+export const sandBoxTable = pgTable('sand_box', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: varchar('name', { length: 255 }).notNull(),
+  code: text('code').notNull(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => usersTable.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
