@@ -2,7 +2,6 @@ import 'dotenv/config';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import { handle } from 'hono/vercel';
 import { sandbox } from './router/site/sandbox';
 import { webRouter } from './router/web';
 
@@ -21,8 +20,9 @@ const app = new Hono()
   )
   .route('/web', webRouter)
   .route('/site', sandbox);
+
 // 导出端口和fetch函数
-const exportApp = process.env.NODE_ENV === 'bun' ? handle(app) : app;
+const exportApp = app;
 export default exportApp;
 
 // 导出trpc类型

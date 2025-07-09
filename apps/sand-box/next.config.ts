@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: true,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;

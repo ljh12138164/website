@@ -1,4 +1,3 @@
-import { getAllSandBoxData } from '@/service';
 //app为路由，如果不是app则是组件
 const code: { path: string; code: string }[] = [
   {
@@ -24,7 +23,7 @@ const code: { path: string; code: string }[] = [
   },
 ];
 export default async function Page() {
-  const data = await getAllSandBoxData();
+  // const data = await getAllSandBoxData();
 
   return <div>123</div>;
 }
