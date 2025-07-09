@@ -7,39 +7,64 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { createMarkdown } from '@/server/markdown';
+import { useCreateMarkdown } from '@/server/markdown';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
-import { revalidatePath } from 'next/cache';
+import { useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
+const zodSchema = z.object({
+  name: z.string().min(1, '文档名称不能为空'),
+});
+
 export function MarkdownAdd() {
-  const onSubmit = async (formData: FormData) => {
-    'use server';
-    const name = formData.get('name') as string;
-    await createMarkdown(name);
-    revalidatePath('/');
+  const queryClient = useQueryClient();
+  const { mutate: createMarkdown } = useCreateMarkdown();
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const form = useForm<z.infer<typeof zodSchema>>({
+    resolver: zodResolver(zodSchema),
+    defaultValues: {
+      name: '',
+    },
+  });
+  const onSubmit = async (data: z.infer<typeof zodSchema>) => {
+    createMarkdown(
+      { name: data.name, content: '' },
+      {
+        onSuccess: () => {
+          form.reset();
+          closeRef.current?.click();
+          queryClient.invalidateQueries({ queryKey: ['markdownList'] });
+          toast.success('创建成功');
+        },
+      },
+    );
   };
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger className="cursor-pointer  ml-auto p-2 rounded-md hover:bg-muted">
         <PlusIcon />
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>创建文档</DialogTitle>
-        </DialogHeader>
-        <form action={onSubmit}>
-          <Input type="text" placeholder="文档名称" name="name" />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="p-2">
+          <DialogHeader>
+            <DialogTitle className="p-2 pl-0">创建文档</DialogTitle>
+          </DialogHeader>
+          <Input type="text" placeholder="文档名称" {...form.register('name')} className="mb-2" />
+          <DialogFooter>
+            <Button type="submit">创建</Button>
+            <DialogClose asChild ref={closeRef}>
+              <Button type="button" variant="outline">
+                取消
+              </Button>
+            </DialogClose>
+          </DialogFooter>
         </form>
-        <DialogFooter>
-          <Button type="submit">创建</Button>
-          <DialogClose asChild>
-            <Button type="button" variant="outline">
-              取消
-            </Button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

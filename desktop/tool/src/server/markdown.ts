@@ -1,31 +1,32 @@
-import { markdownList } from '@/db/schema';
-import db from '@/index';
-import { eq } from 'drizzle-orm';
+'use client';
+
+import type { MarkdownItem } from '@/types/markdown';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { invoke } from '@tauri-apps/api/core';
 
 /**
  * ### 获取markdown列表q
  */
-export const getMarkdownList = async (): Promise<(typeof markdownList.$inferSelect)[]> => {
-  const markdownListData = await db.select().from(markdownList);
-  return markdownListData;
+export const useGetMarkdownList = () => {
+  return useQuery({
+    queryKey: ['markdownList'],
+    queryFn: () => invoke<MarkdownItem[]>('get_markdown_list'),
+  });
 };
 
-/**
+/*q*
  * ### 创建markdown
  */
-export const createMarkdown = async (name: string, content = '') => {
-  const markdownListData = await db.insert(markdownList).values({ name, content }).returning();
-  return markdownListData;
+export const useCreateMarkdown = () => {
+  return useMutation<MarkdownItem, Error, { name: string; content: string }>({
+    mutationFn: async ({ name, content }: { name: string; content: string }) =>
+      invoke<MarkdownItem>('create_markdown', { name, content }),
+  });
 };
 
-/**
- * ### 更新markdown
- */
-export const updateMarkdown = async (id: number, name: string, content = '') => {
-  const markdownListData = await db
-    .update(markdownList)
-    .set({ name, content })
-    .where(eq(markdownList.id, id))
-    .returning();
-  return markdownListData;
+export const useUpdateMarkdown = () => {
+  return useMutation<MarkdownItem, Error, { id: number; name: string; content: string }>({
+    mutationFn: async ({ id, name, content }: { id: number; name: string; content: string }) =>
+      invoke<MarkdownItem>('update_markdown', { id, name, content }),
+  });
 };

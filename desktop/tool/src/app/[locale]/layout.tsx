@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
 import './globals.css';
+import { Providers } from '@/components/tool/providers';
 const fontSans = Geist({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -33,7 +34,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang={locale} suppressHydrationWarning>
       <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}>
         <NextIntlClientProvider>
-          <div className="flex flex-col min-h-screen">{children}</div>
+          <Providers>
+            <div className="flex flex-col min-h-screen">{children}</div>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

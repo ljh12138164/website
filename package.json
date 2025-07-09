@@ -10,7 +10,7 @@
     "dev:tool": "turbo dev --filter=tool --filter=webs",
     "dev:web": "turbo dev --filter=webs --filter=apis",
     "lint:all": "turbo lint",
-    "commit": "git add . && cz",
+    "commit": "git add . &&  git-cz",
     "lint": "biome check --fix --unsafe"
   },
   "simple-git-hooks": {
@@ -19,7 +19,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "node_modules/cz-customizable"
     }
   },
   "lint-staged": {
@@ -37,16 +37,20 @@
     "@biomejs/biome": "^2.0.6",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "commitlint-config-cz": "^0.13.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^7.4.0",
+    "cz-lerna-changelog": "^2.0.3",
     "@types/jest": "^30.0.0",
     "@workspace/config": "workspace:*",
     "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0",
     "jest": "^30.0.4",
     "lint-staged": "^15.5.2",
     "simple-git-hooks": "^2.13.0",
     "stylelint": "^16.21.1",
     "ts-jest": "^29.4.0",
     "turbo": "^2.5.4",
+    "@types/node": "22.13.10",
     "typescript": "5.8.2"
   },
   "engines": {
@@ -54,10 +58,12 @@
   },
   "packageManager": "pnpm@10.5.2",
   "overrides": {
-    "next": "15.3.3",
+    "next": "latest",
     "typescript": "5.8.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
     "react-is": "19.1.0",
     "hono": "4.8.2"
   },

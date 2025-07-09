@@ -2,8 +2,8 @@
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
+import { QueryProvider } from "@/components/provider/query-provide";
 import { AuthProvide } from "../auth-container/auth-provide";
-import { QueryProvider } from "./query-provide";
 
 function Providers({ children }: { children: React.ReactNode }) {
 	return (
