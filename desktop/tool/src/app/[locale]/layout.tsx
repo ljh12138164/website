@@ -1,8 +1,10 @@
-import { Geist, Geist_Mono } from 'next/font/google';
+import Menu from '@/components/tool/menu';
+import { Providers } from '@/components/tool/providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { Providers } from '@/components/tool/providers';
+
 const fontSans = Geist({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -30,12 +32,14 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   const locale = await getLocale();
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}>
         <NextIntlClientProvider>
           <Providers>
-            <div className="flex flex-col min-h-screen">{children}</div>
+            <Menu />
+            <div className="flex flex-col h-[100dvh-20px]">{children}</div>
           </Providers>
         </NextIntlClientProvider>
       </body>

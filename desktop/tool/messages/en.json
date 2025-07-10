@@ -7,5 +7,16 @@
     "dark": "Dark",
     "system": "System",
     "toggleTheme": "Toggle theme"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "save": "Save"
+  },
+  "menu": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "close": "Close"
   }
 }
