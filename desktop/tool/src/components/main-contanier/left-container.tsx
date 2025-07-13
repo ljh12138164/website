@@ -19,7 +19,6 @@ export function LeftContainer() {
   );
 
   const filteredMarkdownList = markdownList?.filter((item) => item.name.includes(search));
-
   return (
     <div>
       <nav className="flex items-center p-2">

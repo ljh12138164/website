@@ -21,10 +21,21 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
-            let handle = app.handle();
-
             // 初始化数据库
-            app.manage(async_runtime::block_on(db::db_init(&handle)).unwrap());
+            match async_runtime::block_on(db::db_init()) {
+                Ok(db_conn) => {
+                    println!("数据库连接成功");
+                    app.manage(db_conn);
+                }
+                Err(err) => {
+                    eprintln!("数据库连接错误: {}", err);
+                    // 可以选择退出应用或者继续但不提供数据库功能
+                    if let Some(window) = app.get_webview_window("main") {
+                        let _ = window.emit("db-error", format!("数据库连接失败: {}", err));
+                    }
+                }
+            }
+
             // 菜单事件监听
             // 启动参数文件打开
             let args: Vec<String> = env::args().collect();
