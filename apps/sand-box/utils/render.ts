@@ -43,21 +43,9 @@ import * as Textarea from '@/components/ui/textarea';
 import * as Toggle from '@/components/ui/toggle';
 import * as ToggleGroup from '@/components/ui/toggle-group';
 import * as Tooltip from '@/components/ui/tooltip';
-import to from 'await-to-js';
 import esbuild from 'esbuild-wasm';
-import * as Lucide from 'lucide-react';
-import * as Cache from 'next/cache';
-import * as CompatRouter from 'next/compat/router';
 
-import * as Image from 'next/image';
-import * as Link from 'next/link';
-import * as Navigation from 'next/navigation';
-import * as Router from 'next/router';
-import * as Script from 'next/script';
-import * as Server from 'next/server';
-import * as WebVitals from 'next/web-vitals';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 const uiComponentMap: UIComponentMap = {
   '@/components/ui/button': { default: Button.Button, ...Button },
@@ -136,156 +124,79 @@ function safeEvalFunction(params: string[], code: string, ...args: unknown[]): u
     return fn(...args);
   } catch (error) {
     console.error('执行动态代码时出错:', error);
-    throw new Error(`执行动态代码失败: ${error instanceof Error ? error.message : String(error)}`);
+    // throw new Error(`执行动态代码失败: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
-// 编译 + 执行 + 返回组件
+async function extractImports(code: string) {
+  // 先初始化 WASM 模块
+  await init;
+
+  // parse 返回两个数组：imports 和 exports
+  const [imports, exports] = parse(code);
+
+  // imports 数组中每个元素是 { s, e, ss, se, d, n }，
+  // 其中 n 是模块名字符串（如 'react'），d 为 -1 表示不是动态导入
+  const moduleNames = imports
+    .filter(({ n }) => n) // 只取有模块名的
+    .map(({ n }) => n);
+
+  return moduleNames;
+}
+// 编译 + 动态 import Blob URL + 返回组件
 export async function compileAndRender(
   code: Uint8Array,
   component: [string, string][],
+  _codeString: string,
 ): Promise<React.ComponentType<unknown>> {
-  // 使用更简单的转换配置
-  const [error, result] = await to(
-    esbuild.transform(code, {
+  const decoder = new TextDecoder();
+  const userSource = decoder.decode(code);
+
+  // 构造一个完整 ESM 模块字符串
+  const fullCode = `
+    import * as React from 'react';
+
+    ${component
+      .map(
+        ([_name, source], i) =>
+          `const Comp_${i} = (() => { ${source}; return module.exports?.default || module.exports; })();`,
+      )
+      .join('\n')}
+
+    ${userSource}
+  `;
+
+  const result = await esbuild.build({
+    stdin: {
+      contents: fullCode,
+      resolveDir: '/',
+      sourcefile: 'input.tsx',
       loader: 'tsx',
-      format: 'cjs', // 使用CommonJS格式
-      target: 'es2015',
-    }),
-  );
-  if (error) {
-    console.error(error);
-    throw error;
+    },
+    format: 'esm',
+    bundle: true,
+    write: false,
+    target: 'es2015',
+    external: ['react', 'react-dom'],
+  });
+
+  const compiledCode = result.outputFiles[0].text;
+  const blob = new Blob([compiledCode], { type: 'application/javascript' });
+  const blobUrl = URL.createObjectURL(blob);
+
+  try {
+    const dynamicImport = new Function('url', 'return import(url);');
+    const mod = await dynamicImport(blobUrl);
+    const Component = mod.default;
+
+    if (!Component || typeof Component !== 'function') {
+      throw new Error('编译后的代码未导出有效的React组件');
+    }
+
+    return (props) => React.createElement(Component, props || {});
+  } finally {
+    URL.revokeObjectURL(blobUrl);
   }
-
-  // 创建模块执行环境
-  const module: ModuleType = { exports: {} };
-
-  // 定义require函数
-  const require: RequireFunction = (mod: string) => {
-    if (mod === 'react') return React;
-    if (mod === 'react-dom') return ReactDOM;
-    if (mod === 'react/jsx-runtime') {
-      return {
-        jsx: React.createElement,
-        jsxs: React.createElement,
-        Fragment: React.Fragment,
-      };
-    }
-
-    if (mod === 'lucide-react') return Lucide;
-    if (mod === 'next/image') return Image;
-    if (mod === 'next/link') return Link;
-    if (mod === 'next/router') return Router;
-    if (mod === 'next/cache') return Cache;
-    if (mod === 'next/server') return Server;
-    if (mod === 'next/script') return Script;
-    if (mod === 'next/navigation') return Navigation;
-    if (mod === 'next/compat/router') return CompatRouter;
-    if (mod === 'next/web-vitals') return WebVitals;
-
-    // if (nextComponentMap[mod]) return nextComponentMap[mod];
-    // shadcn/ui 组件映射
-
-    // 检查是否是ui组件
-    if (uiComponentMap[mod]) {
-      return uiComponentMap[mod];
-    }
-
-    // 处理自定义组件导入
-    const customComponent = component.find((item) => item[0] === mod);
-    if (customComponent) {
-      // 创建一个模块对象来执行导入的组件代码
-      const componentModule: ModuleType = { exports: {} };
-      const componentRequire: RequireFunction = (innerMod: string) => require(innerMod);
-
-      try {
-        // 执行组件代码，填充componentModule.exports
-        safeEvalFunction(
-          ['React', 'module', 'exports', 'require'],
-          customComponent[1],
-          React,
-          componentModule,
-          componentModule.exports,
-          componentRequire,
-        );
-
-        return componentModule.exports;
-      } catch (err) {
-        console.error(`加载组件模块 "${mod}" 时出错:`, err);
-      }
-    }
-
-    throw new Error(`Cannot require module "${mod}"`);
-  };
-
-  // 定义一个与React绑定的执行函数---
-  safeEvalFunction(
-    ['React', 'module', 'exports', 'require'],
-    result.code,
-    React,
-    module,
-    module.exports,
-    require,
-  );
-
-  // 获取导出的组件
-  const Component = module.exports;
-
-  // 直接从编译后的代码中获取组件
-  const findComponentInExports = (
-    obj: Record<string, unknown>,
-  ): React.ComponentType<unknown> | null => {
-    // 检查default导出
-    if (obj && typeof obj.default === 'function') {
-      return obj.default as React.ComponentType<unknown>;
-    }
-
-    // 检查直接导出
-    if (typeof obj === 'function') {
-      return obj as React.ComponentType<unknown>;
-    }
-
-    // 查找所有可能的组件
-    if (obj && typeof obj === 'object') {
-      for (const key in obj) {
-        if (typeof obj[key] === 'function') {
-          return obj[key] as React.ComponentType<unknown>;
-        }
-      }
-    }
-
-    return null;
-  };
-
-  // 尝试查找组件
-  const foundComponent = findComponentInExports(Component as Record<string, unknown>);
-
-  if (!foundComponent) {
-    throw new Error('编译后的代码未导出有效的React组件');
-  }
-
-  // 创建一个包装组件确保props传递正确
-  const WrappedComponent: React.ComponentType<unknown> = (props: unknown) => {
-    try {
-      // 检查foundComponent是否是有效的组件类型
-      if (typeof foundComponent !== 'function') {
-        throw new Error(`无效的组件: ${typeof foundComponent}`);
-      }
-
-      // 确保props不为null
-      return React.createElement(foundComponent, props || {});
-    } catch (error) {
-      console.error('渲染组件时出错:', error);
-      return React.createElement(
-        'div',
-        null,
-        `渲染组件时出错: ${error instanceof Error ? error.message : String(error)}`,
-      );
-    }
-  };
-
-  return WrappedComponent;
 }
 
 /**
@@ -300,7 +211,7 @@ export async function compile(
     code.map((item) =>
       esbuild.transform(item[1], {
         loader: 'tsx',
-        format: 'cjs',
+        format: 'esm',
         target: 'es2015',
       }),
     ),

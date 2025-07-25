@@ -1,7 +1,7 @@
 'use client';
 import { compile, compileAndRender } from '@/utils/render';
 import esbuild from 'esbuild-wasm';
-import type React from 'react';
+import type * as React from 'react';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,6 @@ export default function Render({ data }: { data: { path: string; code: string }[
     // 处理组件和路由
     const component = data.filter((item) => !item.path.startsWith('app'));
     const router = data.filter((item) => item.path.startsWith('app'));
-
     (async () => {
       await esbuild.initialize({
         wasmURL: '/esbuild.wasm',
@@ -36,6 +35,7 @@ export default function Render({ data }: { data: { path: string; code: string }[
           compileAndRender(
             new TextEncoder().encode(routerComponent.code),
             componentsData.map((item) => [`./${item.name}`, item.code]),
+            routerComponent.code,
           ),
         );
         if (error) {
@@ -64,7 +64,6 @@ export default function Render({ data }: { data: { path: string; code: string }[
 
   // 确保props对象存在且有效
   const props = { title: '客户端组件渲染 AI 代码' };
-
   return (
     <div>
       <h2>✅ 客户端组件中渲染的动态组件：</h2>
